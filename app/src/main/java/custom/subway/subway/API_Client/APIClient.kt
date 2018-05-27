@@ -1,5 +1,6 @@
 package custom.subway.subway.API_Client
 
+import com.facebook.stetho.okhttp3.StethoInterceptor
 import custom.subway.subway.Constants
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -30,7 +31,7 @@ class APIClient {
             LogLevel.LOG_REQ_RES_HEADERS_ONLY -> interceptor.level = HttpLoggingInterceptor.Level.HEADERS
         }
 
-        val headInterceptorForLoginUser = Interceptor { chain ->
+        val headerInterceptorForLoginUser = Interceptor { chain ->
             val original = chain.request()
             val builder = original.newBuilder()
             builder.header("Authorization", "abc")
@@ -46,7 +47,8 @@ class APIClient {
                 .writeTimeout(3, TimeUnit.MINUTES)
                 .readTimeout(3, TimeUnit.MINUTES)
                 .addInterceptor(interceptor)
-                .addInterceptor(headInterceptorForLoginUser)
+                .addNetworkInterceptor(StethoInterceptor())
+                .addInterceptor(headerInterceptorForLoginUser)
                 .build()
 
         if (null == retrofit) {
@@ -61,6 +63,6 @@ class APIClient {
         return retrofit!!
     }
 
-    fun getAPIService(logLevel: LogLevel = LogLevel.LOG_REQ_RES_BODY_HEADERS) = getClient(logLevel).create(APIClient::class.java)
+    fun getAPIService(logLevel: LogLevel = LogLevel.LOG_REQ_RES_BODY_HEADERS) = getClient(logLevel).create(APIService::class.java)
 
 }
