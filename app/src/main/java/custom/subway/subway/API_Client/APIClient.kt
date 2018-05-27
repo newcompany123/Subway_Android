@@ -1,7 +1,9 @@
 package custom.subway.subway.API_Client
 
 import com.facebook.stetho.okhttp3.StethoInterceptor
-import custom.subway.subway.Constants
+import custom.subway.subway.Model.User
+import custom.subway.subway.Utility.Constants
+import custom.subway.subway.Utility.SubwayApplication
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -12,7 +14,7 @@ import retrofit2.converter.scalars.ScalarsConverterFactory
 import java.util.concurrent.TimeUnit
 
 
-class APIClient {
+class APIClient(val application: SubwayApplication) {
     private var retrofit: Retrofit? = null
 
     enum class LogLevel {
@@ -34,13 +36,13 @@ class APIClient {
         val headerInterceptorForLoginUser = Interceptor { chain ->
             val original = chain.request()
             val builder = original.newBuilder()
-            builder.header("Authorization", "abc")
+            if (application.isLogin) {
+                builder.header("Authorization", User(application).token)
+            }
             builder.method(original.method(), original.body())
             val request = builder.build()
-            val response = chain.proceed(request)
             chain.proceed(request)
         }
-
 
         val client = OkHttpClient.Builder()
                 .connectTimeout(3, TimeUnit.MINUTES)

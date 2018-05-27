@@ -1,12 +1,11 @@
-package custom.subway.subway.Utility
+package custom.subway.subway.Model
 
 import android.content.Context
-import custom.subway.subway.Constants
+import custom.subway.subway.Utility.Constants
+import java.io.Serializable
 
 
-class User(val context: Context) {
-
-    var isLogin: Boolean = false
+class User(val context: Context) : Serializable {
 
     var token: String = ""
         set(userNewToken) {
@@ -14,13 +13,14 @@ class User(val context: Context) {
             with(context.getSharedPreferences(Constants.USER_TOKEN_PREF, Context.MODE_PRIVATE).edit()) {
                 putString(Constants.TOKEN_KEY, userNewToken).commit()
             }
-            isLogin()
+            checkLogin()
         }
 
-    fun isLogin() {
+    fun checkLogin(): Boolean {
         with(context.getSharedPreferences(Constants.USER_TOKEN_PREF, Context.MODE_PRIVATE).getString(Constants.TOKEN_KEY, Constants.EMPTY_TOKEN)) {
-            if (this == Constants.EMPTY_TOKEN) isLogin = false else isLogin = true
+            if (this == Constants.EMPTY_TOKEN) return false else return true
         }
+        return false
     }
 
 

@@ -1,15 +1,16 @@
-package custom.subway.subway
+package custom.subway.subway.ViewModel
 
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import custom.subway.subway.API_Client.APIClient
-import custom.subway.subway.Utility.User
+import custom.subway.subway.Model.User
+import custom.subway.subway.R
+import custom.subway.subway.Utility.BaseActivity
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity() {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,9 +24,7 @@ class MainActivity : AppCompatActivity() {
 
 
         abccc.setOnClickListener {
-
-
-            APIClient()
+            APIClient(application = subwayApplication)
                     .getAPIService()
                     .testt()
                     .subscribeOn(Schedulers.single())
