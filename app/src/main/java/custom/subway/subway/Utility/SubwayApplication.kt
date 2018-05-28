@@ -7,7 +7,7 @@ import custom.subway.subway.Model.User
 class SubwayApplication : MultiDexApplication() {
 
 
-    val isLogin = User(this).checkLogin()
+    val isLogin by lazy { User(this).checkLogin() }
 
     override fun onCreate() {
         super.onCreate()
