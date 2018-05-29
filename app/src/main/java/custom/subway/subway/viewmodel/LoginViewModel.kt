@@ -3,7 +3,6 @@ package custom.subway.subway.ViewModel
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.databinding.BaseObservable
 import android.databinding.ObservableField
 import android.util.Log
 import android.view.View
@@ -28,23 +27,18 @@ import com.kakao.usermgmt.callback.MeResponseCallback
 import com.kakao.usermgmt.response.model.UserProfile
 import com.kakao.util.exception.KakaoException
 import custom.subway.subway.API_Client.APIClient
+import custom.subway.subway.Contract.LoginContract
 import custom.subway.subway.Model.User
 import custom.subway.subway.R
 import custom.subway.subway.Utility.SubwayApplication
-import custom.subway.subway.contract.LoginContract
 import custom.subway.subway.view.ui.LoginActivity
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
 
-
-/**
- *  Kakao with Facebook Api logic
- */
 class LoginViewModel(private val activity: Activity
                      , private val context: Context
-                     , private val subwayApplication: SubwayApplication)
-    : BaseObservable() {
+                     , private val subwayApplication: SubwayApplication) {
 
     val TextView_nickname: ObservableField<String> by lazy { ObservableField<String>() }
 
@@ -52,12 +46,10 @@ class LoginViewModel(private val activity: Activity
     val loginContract: LoginContract = context as LoginContract
 
 //    init {
-//        Log.e("111", "111")
 //        initiateFacebookLogin()
 //    }
 
     fun initiateFacebookLogin() {
-        Log.e("222", "222")
         FacebookSdk.sdkInitialize(getApplicationContext())
         AppEventsLogger.activateApp(context)
 
@@ -65,20 +57,18 @@ class LoginViewModel(private val activity: Activity
 
         val loginButton = activity.findViewById<View>(R.id.login_button) as LoginButton
         loginButton.setReadPermissions("email")
-        Log.e("333", "333")
+
         // Callback registration
         loginButton.registerCallback(callbackManager, object : FacebookCallback<LoginResult> {
             override fun onSuccess(loginResult: LoginResult) {
-                Log.e("testt", "onSuccess 1")
+                Log.d("testt", "onSuccess 1")
             }
 
             override fun onCancel() {
-                Log.e("testt", "onSuccess 1")
                 loginContract.facebookLoginIsFailed()
             }
 
             override fun onError(exception: FacebookException) {
-                Log.e("testt", "onSuccess 1")
                 loginContract.facebookLoginIsFailed()
             }
         })
@@ -88,7 +78,7 @@ class LoginViewModel(private val activity: Activity
         LoginManager.getInstance().registerCallback(callbackManager,
                 object : FacebookCallback<LoginResult> {
                     override fun onSuccess(loginResult: LoginResult) {
-                        Log.e("testt", "onSuccess")
+                        Log.d("testt", "onSuccess")
                         registerSubwayService(loginResult)
                     }
 
@@ -114,7 +104,7 @@ class LoginViewModel(private val activity: Activity
                             onNext = {
                                 with(User(context)) {
                                     this.token = it.tokenFromServer
-                                    Log.e("testt", "tokenFromServer : " + it.tokenFromServer)
+                                    Log.d("testt", "tokenFromServer : " + it.tokenFromServer)
                                 }
                             },
                             onError = {
@@ -162,6 +152,14 @@ class LoginViewModel(private val activity: Activity
     }
 
     fun registerSubwayService(result: AccessTokenInfoResponse) {
+        result.let {
+            APIClient(application = subwayApplication)
+                    .getAPIService()
+                    .registServiceKakao(it.toString())
+                    .subscribeOn(Schedulers.single())
+
+
+        }
     }
 
     fun requestKakaoMyInfo() {

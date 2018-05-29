@@ -6,10 +6,10 @@ import android.os.Bundle
 import android.util.Log
 import com.kakao.auth.Session
 import custom.subway.subway.BR
+import custom.subway.subway.Contract.LoginContract
 import custom.subway.subway.R
 import custom.subway.subway.Utility.BaseActivity
 import custom.subway.subway.ViewModel.LoginViewModel
-import custom.subway.subway.contract.LoginContract
 import custom.subway.subway.databinding.LoginActivityBinding
 
 
