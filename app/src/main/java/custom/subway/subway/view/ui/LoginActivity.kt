@@ -8,9 +8,9 @@ import com.kakao.auth.Session
 import custom.subway.subway.BR
 import custom.subway.subway.R
 import custom.subway.subway.Utility.BaseActivity
+import custom.subway.subway.ViewModel.LoginViewModel
 import custom.subway.subway.contract.LoginContract
 import custom.subway.subway.databinding.LoginActivityBinding
-import custom.subway.subway.viewmodel.LoginViewModel
 
 
 class LoginActivity : BaseActivity(), LoginContract {
@@ -34,7 +34,7 @@ class LoginActivity : BaseActivity(), LoginContract {
     private fun InitDataBinding(loginViewModel: LoginViewModel) {
         val loginBinding: LoginActivityBinding =
                 DataBindingUtil.setContentView(this, R.layout.login_activity)
-        loginBinding.setVariable(BR.LoginViewModel, loginViewModel)
+        loginBinding.setVariable(BR.loginViewModel, loginViewModel)
         loginBinding.executePendingBindings()
     }
 
@@ -47,6 +47,7 @@ class LoginActivity : BaseActivity(), LoginContract {
         if (Session.getCurrentSession().handleActivityResult(requestCode, resultCode, data)) return
         super.onActivityResult(requestCode, resultCode, data)
     }
+
     override fun moveMainActivity() {
         super.moveMainActivity()
     }

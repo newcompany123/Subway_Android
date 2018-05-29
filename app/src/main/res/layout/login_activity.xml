@@ -7,11 +7,8 @@
     <data>
 
         <variable
-            name="loginModel"
-            type="custom.subway.subway.viewmodel.LoginViewModel" />
-        <variable
-            name="LoginViewModel"
-            type="custom.subway.subway.viewmodel.LoginViewModel" />
+            name="loginViewModel"
+            type="custom.subway.subway.ViewModel.LoginViewModel" />
     </data>
 
     <LinearLayout
@@ -36,6 +33,7 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
         <com.kakao.usermgmt.LoginButton
             android:id="@+id/button_kakako_login"
             android:layout_width="match_parent"
@@ -45,7 +43,7 @@
             android:id="@+id/button_kakao_logout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="@{LoginViewModel::KaKaoLogOut}"
+            android:onClick="@{loginViewModel::KaKaoLogOut}"
             android:text="카톡 로그아웃" />
 
         <TextView
@@ -53,7 +51,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="비로그인 상태"
-            android:text="@{LoginViewModel.TextView_nickname}"
+            android:text="@{loginViewModel.TextView_nickname}"
             android:textColor="#000" />
     </LinearLayout>
 

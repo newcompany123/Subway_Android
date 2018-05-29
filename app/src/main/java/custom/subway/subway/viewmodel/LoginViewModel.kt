@@ -1,4 +1,4 @@
-package custom.subway.subway.viewmodel
+package custom.subway.subway.ViewModel
 
 import android.app.Activity
 import android.content.Context
