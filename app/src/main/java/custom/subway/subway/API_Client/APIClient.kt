@@ -1,5 +1,4 @@
 package custom.subway.subway.API_Client
-
 import custom.subway.subway.Constants
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -61,6 +60,6 @@ class APIClient {
         return retrofit!!
     }
 
-    fun getAPIService(logLevel: LogLevel = LogLevel.LOG_REQ_RES_BODY_HEADERS) = getClient(logLevel).create(APIClient::class.java)
+    fun getAPIService(logLevel: LogLevel = LogLevel.LOG_REQ_RES_BODY_HEADERS) = getClient(logLevel).create(Service::class.java)
 
 }

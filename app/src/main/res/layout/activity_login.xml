@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+
+        <variable
+            name="LoginViewModel"
+            type="custom.subway.subway.viewmodel.LoginViewModel" />
+    </data>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context="custom.subway.subway.view.ui.LoginActivity">
+
+        <com.kakao.usermgmt.LoginButton
+            android:id="@+id/button_kakako_login"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/button_kakao_logout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="@{LoginViewModel::KaKaoLogOut}"
+            android:text="카톡 로그아웃" />
+
+        <TextView
+            android:id="@+id/textview_nickname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="비로그인 상태"
+            android:text="@{LoginViewModel.TextView_nickname}"
+            android:textColor="#000" />
+    </LinearLayout>
+</layout>
