@@ -1,8 +1,8 @@
 package custom.subway.subway.API_Client
 
+
 import com.facebook.stetho.okhttp3.StethoInterceptor
 import custom.subway.subway.Model.User
-import custom.subway.subway.Utility.Constants
 import custom.subway.subway.Utility.SubwayApplication
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -55,7 +55,7 @@ class APIClient(val application: SubwayApplication) {
 
         if (null == retrofit) {
             retrofit = Retrofit.Builder()
-                    .baseUrl(Constants.BASE_URL)
+                    .baseUrl(custom.subway.subway.Constants.BASE_URL)
                     .addConverterFactory(GsonConverterFactory.create())
                     .addConverterFactory(ScalarsConverterFactory.create())
                     .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
@@ -65,6 +65,7 @@ class APIClient(val application: SubwayApplication) {
         return retrofit!!
     }
 
-    fun getAPIService(logLevel: LogLevel = LogLevel.LOG_REQ_RES_BODY_HEADERS) = getClient(logLevel).create(APIService::class.java)
+
+    fun getAPIService(logLevel: LogLevel = LogLevel.LOG_REQ_RES_BODY_HEADERS) = getClient(logLevel).create(Service::class.java)
 
 }

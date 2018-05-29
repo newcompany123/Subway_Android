@@ -1,8 +1,12 @@
 <resources>
     <string name="app_name">Subway</string>
 
-    //Facebook
+    <!--Facebook-->
     <string name="facebook_app_id">1021972497961919</string>
     <string name="fb_login_protocol_scheme">fb1021972497961919</string>
 
+    <string name="kakao_app_key">843edbbf2a458a072e9670fb028eb8f5</string>
+
+    <!--ERROR-->
+    <string name="fail_kakao_login">사용자 정보를 찾지 못하였습니다.</string>
 </resources>
