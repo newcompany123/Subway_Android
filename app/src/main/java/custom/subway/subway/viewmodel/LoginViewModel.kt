@@ -27,7 +27,6 @@ import com.kakao.util.exception.KakaoException
 import custom.subway.subway.API_Client.APIClient
 import custom.subway.subway.Contract.LoginContract
 import custom.subway.subway.Model.User
-import custom.subway.subway.R
 import custom.subway.subway.Utility.SubwayApplication
 import custom.subway.subway.view.ui.LoginActivity
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -45,17 +44,17 @@ class LoginViewModel(val activity: Activity, val context: Context, val subwayApp
     lateinit var callbackManager: CallbackManager
     val loginContract: LoginContract = context as LoginContract
 
-    init {
-        initiateFacebookLogin()
-    }
+//    init {
+//        initiateFacebookLogin()
+//    }
 
-    fun initiateFacebookLogin() {
+    fun initiateFacebookLogin(view : View) {
         FacebookSdk.sdkInitialize(getApplicationContext())
         AppEventsLogger.activateApp(context)
 
         callbackManager = CallbackManager.Factory.create()
 
-        val loginButton = activity.findViewById<View>(R.id.login_button) as LoginButton
+         val loginButton : LoginButton = view as LoginButton
         loginButton.setReadPermissions("email")
 
         // Callback registration
