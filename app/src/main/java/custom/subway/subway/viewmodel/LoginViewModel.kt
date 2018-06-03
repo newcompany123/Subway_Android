@@ -16,8 +16,11 @@ import com.facebook.appevents.AppEventsLogger
 import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
 import com.facebook.login.widget.LoginButton
+import com.kakao.auth.ApiResponseCallback
+import com.kakao.auth.AuthService
 import com.kakao.auth.ISessionCallback
 import com.kakao.auth.Session
+import com.kakao.auth.network.response.AccessTokenInfoResponse
 import com.kakao.network.ErrorResult
 import com.kakao.usermgmt.UserManagement
 import com.kakao.usermgmt.callback.LogoutResponseCallback
@@ -40,11 +43,11 @@ import io.reactivex.schedulers.Schedulers
 class LoginViewModel(val activity: Activity, val context: Context, val subwayApplication: SubwayApplication) : BaseObservable() {
     val TextView_nickname: ObservableField<String> by lazy { ObservableField<String>() }
 
-
     lateinit var callbackManager: CallbackManager
     val loginContract: LoginContract = context as LoginContract
 
     init {
+        CheckKakoSession()
         FacebookSdk.sdkInitialize(getApplicationContext())
         AppEventsLogger.activateApp(context)
         callbackManager = CallbackManager.Factory.create()
@@ -88,40 +91,58 @@ class LoginViewModel(val activity: Activity, val context: Context, val subwayApp
                 })
     }
 
-    fun registerSubwayService(loginResult: LoginResult) {
-        loginResult.accessToken?.let {
-            APIClient(application = subwayApplication)
-                    .getAPIService()
-                    .registService(it.toString())
-                    .subscribeOn(Schedulers.single())
-                    .distinct()
-                    .subscribeOn(AndroidSchedulers.mainThread())
-                    .subscribeBy(
-                            onNext = {
-                                with(User(context)) {
-                                    this.token = it.tokenFromServer
-                                    Log.d("testt", "tokenFromServer : " + it.tokenFromServer)
+    fun registerSubwayService(loginResult: LoginResult? = null, loginResultKakao: AccessTokenInfoResponse? = null) {
+        if (null == loginResultKakao) {
+            loginResult!!.accessToken?.let {
+                APIClient(application = subwayApplication)
+                        .getAPIService()
+                        .registService(it.toString())
+                        .subscribeOn(Schedulers.single())
+                        .distinct()
+                        .subscribeOn(AndroidSchedulers.mainThread())
+                        .subscribeBy(
+                                onNext = {
+                                    with(User(context)) {
+                                        this.token = it.tokenFromServer
+                                        Log.d("testt", "tokenFromServer : " + it.tokenFromServer)
+                                    }
+                                },
+                                onError = {
+                                    loginContract.facebookLoginIsFailed()
+                                },
+                                onComplete = {
+                                    loginContract.facebookLoginIsCompleted()
                                 }
-                            },
-                            onError = {
-                                loginContract.facebookLoginIsFailed()
-                            },
-                            onComplete = {
-                                loginContract.facebookLoginIsCompleted()
-                            }
-                    )
+                        )
+            }
+        } else {
+            loginResultKakao.userId.let {
+                APIClient(application = subwayApplication)
+                        .getAPIService()
+                        .registServiceKakao(it.toString())
+                        .subscribeOn(Schedulers.single())
+                        .subscribeOn(AndroidSchedulers.mainThread())
+                        .subscribe(
+                                { success ->
+                                    Log.e("Kakao 성공", "성공")
+                                },
+                                { fail ->
+                                    Log.e("Kakao 패일", fail.message)
+                                }
+                        )
+            }
         }
     }
 
     fun CheckKakoSession() {
-        if (Session.getCurrentSession().isOpened) requestMe()
+        if (Session.getCurrentSession().isOpened) RequestMeKakao()
         else {
-            Session.getCurrentSession().addCallback(SessionCallback(requestMe()))
+            Session.getCurrentSession().addCallback(SessionCallback(RequestMeKakao()))
             Session.getCurrentSession().checkAndImplicitOpen()
         }
     }
 
-    fun KaKaoLogOut(view: View) {
+    fun KaKaoLogOut() {
         UserManagement.getInstance().requestLogout(object : LogoutResponseCallback() {
             override fun onCompleteLogout() {
                 TextView_nickname.set("로그아웃 성공")
@@ -130,21 +151,45 @@ class LoginViewModel(val activity: Activity, val context: Context, val subwayApp
         })
     }
 
-    fun requestMe() {
+    fun RequestMeKakao() {
         UserManagement.getInstance().requestMe(object : MeResponseCallback() {
             override fun onSuccess(result: UserProfile?) {
                 Log.e("user info : ", result.toString())
                 Log.e("user nickname : ", result!!.nickname)
                 TextView_nickname.set(result.nickname)
+                requestAccessTokenInfo()
             }
 
             override fun onSessionClosed(errorResult: ErrorResult?) {
+                Log.e("errorResult : ", errorResult.toString())
                 CheckKakoSession()
             }
 
             override fun onNotSignedUp() {
+                Log.e("onNotSignedUp : ", "onNotSignedUp")
                 redirectLoginActivity()
             }
+        })
+    }
+
+    fun requestAccessTokenInfo() {
+        AuthService.getInstance().requestAccessTokenInfo(object : ApiResponseCallback<AccessTokenInfoResponse>() {
+            override fun onSuccess(result: AccessTokenInfoResponse?) {
+                val userId: Long = result!!.userId
+                val expiresInMilis: Long = result.expiresInMillis
+                Log.e("userId: ", "" + userId)
+                Log.e("expiresInMilis: ", expiresInMilis.toString())
+                registerSubwayService(null, result)
+            }
+
+            override fun onSessionClosed(errorResult: ErrorResult?) {
+                requestAccessTokenInfo()
+            }
+
+            override fun onNotSignedUp() {
+                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
+
         })
     }
 

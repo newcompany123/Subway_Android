@@ -16,25 +16,14 @@ class LoginActivity : BaseActivity(), LoginContract {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        /**
-         * need to add Kakao and Facebook logic!
-         */
-        val binding: LoginActivityBinding = DataBindingUtil.setContentView<LoginActivityBinding>(this, R.layout.login_activity)
-        val loginViewModel = LoginViewModel(this, this, subwayApplication)
-        binding.loginViewModel = loginViewModel
-
-        val loginViewModel = LoginViewModel(this@LoginActivity, this, subwayApplication)
-        InitDataBinding(loginViewModel)
-        if (Session.getCurrentSession().isOpened) loginViewModel.requestMe()
-
+        InitDataBinding()
     }
 
-    private fun InitDataBinding(loginViewModel: LoginViewModel) {
-        val loginBinding: LoginActivityBinding =
+    private fun InitDataBinding() {
+        val loginViewModel = LoginViewModel(this@LoginActivity, this, subwayApplication)
+        val binding: LoginActivityBinding =
                 DataBindingUtil.setContentView(this, R.layout.login_activity)
-//        loginBinding.setVariable(BR.loginViewModel, loginViewModel)
-//        loginBinding.executePendingBindings()
+        binding.loginViewModel = loginViewModel
     }
 
     override fun onDestroy() {
