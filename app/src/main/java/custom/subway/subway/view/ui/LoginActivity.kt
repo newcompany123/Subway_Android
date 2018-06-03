@@ -9,8 +9,8 @@ import custom.subway.subway.BR
 import custom.subway.subway.Contract.LoginContract
 import custom.subway.subway.R
 import custom.subway.subway.Utility.BaseActivity
-import custom.subway.subway.ViewModel.LoginViewModel
 import custom.subway.subway.databinding.LoginActivityBinding
+import custom.subway.subway.viewmodel.LoginViewModel
 
 
 class LoginActivity : BaseActivity(), LoginContract {
@@ -27,9 +27,7 @@ class LoginActivity : BaseActivity(), LoginContract {
 
         val loginViewModel = LoginViewModel(this@LoginActivity, this, subwayApplication)
         InitDataBinding(loginViewModel)
-        if (Session.getCurrentSession().isOpened) loginViewModel.requestKakaoMyInfo()
-
-
+        if (Session.getCurrentSession().isOpened) loginViewModel.requestMe()
 
 
     }
