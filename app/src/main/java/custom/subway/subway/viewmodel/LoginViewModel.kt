@@ -44,17 +44,14 @@ class LoginViewModel(val activity: Activity, val context: Context, val subwayApp
     lateinit var callbackManager: CallbackManager
     val loginContract: LoginContract = context as LoginContract
 
-//    init {
-//        initiateFacebookLogin()
-//    }
-
-    fun initiateFacebookLogin(view : View) {
+    init {
         FacebookSdk.sdkInitialize(getApplicationContext())
         AppEventsLogger.activateApp(context)
-
         callbackManager = CallbackManager.Factory.create()
+    }
 
-         val loginButton : LoginButton = view as LoginButton
+    fun initiateFacebookLogin(view: View) {
+        val loginButton: LoginButton = view as LoginButton
         loginButton.setReadPermissions("email")
 
         // Callback registration

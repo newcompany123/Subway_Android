@@ -5,7 +5,6 @@ import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.util.Log
 import com.kakao.auth.Session
-import custom.subway.subway.BR
 import custom.subway.subway.Contract.LoginContract
 import custom.subway.subway.R
 import custom.subway.subway.Utility.BaseActivity
@@ -21,22 +20,21 @@ class LoginActivity : BaseActivity(), LoginContract {
         /**
          * need to add Kakao and Facebook logic!
          */
-//        val binding: LoginActivityBinding = DataBindingUtil.setContentView<LoginActivityBinding>(this, R.layout.login_activity)
-//        val loginViewModel = LoginViewModel(this, this, subwayApplication)
-//        binding.loginModel = loginViewModel
+        val binding: LoginActivityBinding = DataBindingUtil.setContentView<LoginActivityBinding>(this, R.layout.login_activity)
+        val loginViewModel = LoginViewModel(this, this, subwayApplication)
+        binding.loginViewModel = loginViewModel
 
         val loginViewModel = LoginViewModel(this@LoginActivity, this, subwayApplication)
         InitDataBinding(loginViewModel)
         if (Session.getCurrentSession().isOpened) loginViewModel.requestMe()
-
 
     }
 
     private fun InitDataBinding(loginViewModel: LoginViewModel) {
         val loginBinding: LoginActivityBinding =
                 DataBindingUtil.setContentView(this, R.layout.login_activity)
-        loginBinding.setVariable(BR.loginViewModel, loginViewModel)
-        loginBinding.executePendingBindings()
+//        loginBinding.setVariable(BR.loginViewModel, loginViewModel)
+//        loginBinding.executePendingBindings()
     }
 
     override fun onDestroy() {
