@@ -29,6 +29,9 @@ class LoginActivity : BaseActivity(), LoginContract {
         InitDataBinding(loginViewModel)
         if (Session.getCurrentSession().isOpened) loginViewModel.requestKakaoMyInfo()
 
+
+
+
     }
 
     private fun InitDataBinding(loginViewModel: LoginViewModel) {

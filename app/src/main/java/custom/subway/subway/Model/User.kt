@@ -1,21 +1,23 @@
 package custom.subway.subway.Model
 
 import android.content.Context
+import android.content.SharedPreferences
 import com.google.gson.annotations.SerializedName
 import custom.subway.subway.Utility.Constants
 import java.io.Serializable
 
 
-class User(val context: Context) : Serializable {
+open class User(val context: Context) : Serializable {
 
     @SerializedName("token")
     var tokenFromServer: String = ""
+    var tokenSharedPreferences: SharedPreferences = context.getSharedPreferences(Constants.USER_TOKEN_PREF, Context.MODE_PRIVATE)
 
     @SerializedName("registered_token")
     var token: String = ""
         set(userNewToken) {
             field = userNewToken
-            with(context.getSharedPreferences(Constants.USER_TOKEN_PREF, Context.MODE_PRIVATE).edit()) {
+            with(tokenSharedPreferences.edit()) {
                 putString(Constants.TOKEN_KEY, userNewToken).commit()
             }
             checkLogin() // 토큰이 설정 되면 로그인 상태 변경해준다
@@ -27,6 +29,4 @@ class User(val context: Context) : Serializable {
         }
         return false
     }
-
-
 }
