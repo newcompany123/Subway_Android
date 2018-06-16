@@ -5,6 +5,7 @@ import custom.subway.subway.Model.User
 import io.reactivex.Observable
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
+import retrofit2.http.GET
 import retrofit2.http.POST
 
 interface Service {
@@ -16,5 +17,8 @@ interface Service {
     @FormUrlEncoded
     @POST("user/kakao-login/")
     fun registServiceKakao(@Field("access_token") access_token: String): Observable<User>
+
+    @GET("/product/")
+    fun getAllProductList()
 
 }

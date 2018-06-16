@@ -14,15 +14,16 @@ import custom.subway.subway.viewmodel.LoginViewModel
 
 class LoginActivity : BaseActivity(), LoginContract {
 
+    lateinit var loginViewModel: LoginViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        InitDataBinding()
+        initDataBinding()
     }
 
-    private fun InitDataBinding() {
-        val loginViewModel = LoginViewModel(this@LoginActivity, this, subwayApplication)
-        val binding: LoginActivityBinding =
-                DataBindingUtil.setContentView(this, R.layout.login_activity)
+    private fun initDataBinding() {
+        loginViewModel = LoginViewModel(this@LoginActivity, this, subwayApplication)
+        val binding: LoginActivityBinding = DataBindingUtil.setContentView(this, R.layout.login_activity)
         binding.loginViewModel = loginViewModel
     }
 
@@ -32,7 +33,9 @@ class LoginActivity : BaseActivity(), LoginContract {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (Session.getCurrentSession().handleActivityResult(requestCode, resultCode, data)) return
+//        if (Session.getCurrentSession().handleActivityResult(requestCode, resultCode, data)) return
+        Log.d("testt", "onActivityResult")
+        loginViewModel.callbackManager.onActivityResult(requestCode, resultCode, data)
         super.onActivityResult(requestCode, resultCode, data)
     }
 

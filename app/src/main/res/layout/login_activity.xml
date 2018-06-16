@@ -11,49 +11,93 @@
             type="custom.subway.subway.viewmodel.LoginViewModel" />
     </data>
 
-    <LinearLayout
+
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="233dp"
+                android:layout_height="49dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="135dp"
+                android:layout_marginTop="143dp"
+                android:src="@drawable/subway_ci" />
+
+            <ImageView
+                android:id="@+id/facebook_login_btn"
+                android:layout_width="230dp"
+                android:layout_height="40dp"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="10dp"
+                android:onClick="@{loginViewModel::initiateFacebookLogin}"
+                android:src="@drawable/btn_facebook" />
+
+            <ImageView
+                android:id="@+id/kakao_login_btn"
+                android:layout_width="230dp"
+                android:layout_height="40dp"
+                android:layout_below="@+id/facebook_login_btn"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="10dp"
+                android:src="@drawable/btn_kakao_talk" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/kakao_login_btn"
+                android:gravity="center"
+                android:onClick="@{loginViewModel::moveToRankingActvityOnclick}"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="7dp"
+                    android:layout_height="7dp"
+                    android:layout_marginRight="4dp"
+                    android:src="@drawable/arrows" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Skip to create an account" />
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="133dp"
+            android:layout_alignParentBottom="true"
+            android:layout_gravity="bottom"
+            android:scaleType="fitXY"
+            android:src="@drawable/sandwich_bg_1" />
+
 
         <com.facebook.login.widget.LoginButton
-            android:id="@+id/login_button"
+            android:id="@+id/button_kakako_login"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:onClick="@{loginViewModel::initiateFacebookLogin}"
-            android:layout_marginBottom="30dp"
-            android:layout_marginTop="30dp" />
-
-        <TextView
-            android:id="@+id/abccc"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Hello World!"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:visibility="gone" />
 
         <com.kakao.usermgmt.LoginButton
-            android:id="@+id/button_kakako_login"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <Button
-            android:id="@+id/button_kakao_logout"
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="@{loginViewModel::KaKaoLogOut}"
-            android:text="카톡 로그아웃" />
+            android:visibility="gone" />
 
-        <TextView
-            android:id="@+id/textview_nickname"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:hint="비로그인 상태"
-            android:text="@{loginViewModel.TextView_nickname}"
-            android:textColor="#000" />
-    </LinearLayout>
+    </FrameLayout>
+
+
+
 
 </layout>

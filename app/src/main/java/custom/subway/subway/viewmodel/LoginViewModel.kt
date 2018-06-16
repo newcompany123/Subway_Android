@@ -4,7 +4,6 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.databinding.BaseObservable
-import android.databinding.ObservableField
 import android.util.Log
 import android.view.View
 import com.facebook.CallbackManager
@@ -15,7 +14,6 @@ import com.facebook.FacebookSdk.getApplicationContext
 import com.facebook.appevents.AppEventsLogger
 import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
-import com.facebook.login.widget.LoginButton
 import com.kakao.auth.ApiResponseCallback
 import com.kakao.auth.AuthService
 import com.kakao.auth.ISessionCallback
@@ -30,44 +28,55 @@ import com.kakao.util.exception.KakaoException
 import custom.subway.subway.API_Client.APIClient
 import custom.subway.subway.Contract.LoginContract
 import custom.subway.subway.Model.User
+import custom.subway.subway.R
 import custom.subway.subway.Utility.SubwayApplication
 import custom.subway.subway.view.ui.LoginActivity
+import custom.subway.subway.view.ui.RankingActivity
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
+import org.jetbrains.anko.intentFor
 
-
-/**
- *  Kakao with Facebook Api logic
- */
 class LoginViewModel(val activity: Activity, val context: Context, val subwayApplication: SubwayApplication) : BaseObservable() {
-    val TextView_nickname: ObservableField<String> by lazy { ObservableField<String>() }
+//    val TextView_nickname: ObservableField<String> by lazy { ObservableField<String>() }
 
-    lateinit var callbackManager: CallbackManager
+    var callbackManager: CallbackManager
     val loginContract: LoginContract = context as LoginContract
+    val realFacebookLoginBtn: com.facebook.login.widget.LoginButton by lazy {
+        activity.findViewById<com.facebook.login.widget.LoginButton>(R.id.button_kakako_login)
+    }
 
     init {
-        CheckKakoSession()
+//        CheckKakoSession()
+
+        checkUserAlreadyLogined()
+
         FacebookSdk.sdkInitialize(getApplicationContext())
         AppEventsLogger.activateApp(context)
         callbackManager = CallbackManager.Factory.create()
     }
 
+    private fun checkUserAlreadyLogined() {
+        User.getInstance().checkLogin()
+    }
+
     fun initiateFacebookLogin(view: View) {
-        val loginButton: LoginButton = view as LoginButton
-        loginButton.setReadPermissions("email")
+        realFacebookLoginBtn.performClick()
+        realFacebookLoginBtn.setReadPermissions("email")
 
         // Callback registration
-        loginButton.registerCallback(callbackManager, object : FacebookCallback<LoginResult> {
+        realFacebookLoginBtn.registerCallback(callbackManager, object : FacebookCallback<LoginResult> {
             override fun onSuccess(loginResult: LoginResult) {
                 Log.d("testt", "onSuccess 1")
             }
 
             override fun onCancel() {
+                Log.d("testt", "onCancel 1")
                 loginContract.facebookLoginIsFailed()
             }
 
             override fun onError(exception: FacebookException) {
+                Log.d("testt", "onError 1")
                 loginContract.facebookLoginIsFailed()
             }
         })
@@ -82,10 +91,12 @@ class LoginViewModel(val activity: Activity, val context: Context, val subwayApp
                     }
 
                     override fun onCancel() {
+                        Log.d("testt", "onCancel")
                         loginContract.facebookLoginIsFailed()
                     }
 
                     override fun onError(exception: FacebookException) {
+                        Log.d("testt", "onError : "+ exception.message)
                         loginContract.facebookLoginIsFailed()
                     }
                 })
@@ -93,18 +104,19 @@ class LoginViewModel(val activity: Activity, val context: Context, val subwayApp
 
     fun registerSubwayService(loginResult: LoginResult? = null, loginResultKakao: AccessTokenInfoResponse? = null) {
         if (null == loginResultKakao) {
-            loginResult!!.accessToken?.let {
+            loginResult!!.accessToken?.token?.let {
+                Log.d("testt", "FACEBOOK TOKEN : " + it)
                 APIClient(application = subwayApplication)
                         .getAPIService()
                         .registService(it.toString())
                         .subscribeOn(Schedulers.single())
                         .distinct()
-                        .subscribeOn(AndroidSchedulers.mainThread())
+                        .observeOn(AndroidSchedulers.mainThread())
                         .subscribeBy(
-                                onNext = {
-                                    with(User(context)) {
-                                        this.token = it.tokenFromServer
-                                        Log.d("testt", "tokenFromServer : " + it.tokenFromServer)
+                                onNext = { createdUser ->
+                                    createdUser?.token?.let {
+                                        User.getInstance().token = it
+                                        moveToRankingActvity()
                                     }
                                 },
                                 onError = {
@@ -142,12 +154,11 @@ class LoginViewModel(val activity: Activity, val context: Context, val subwayApp
         }
     }
 
-    fun KaKaoLogOut() {
+    fun kalogout() {
         UserManagement.getInstance().requestLogout(object : LogoutResponseCallback() {
             override fun onCompleteLogout() {
-                TextView_nickname.set("로그아웃 성공")
+//                TextView_nickname.set("로그아웃 성공")
             }
-
         })
     }
 
@@ -156,7 +167,7 @@ class LoginViewModel(val activity: Activity, val context: Context, val subwayApp
             override fun onSuccess(result: UserProfile?) {
                 Log.e("user info : ", result.toString())
                 Log.e("user nickname : ", result!!.nickname)
-                TextView_nickname.set(result.nickname)
+//                TextView_nickname.set(result.nickname)
                 requestAccessTokenInfo()
             }
 
@@ -208,4 +219,14 @@ class LoginViewModel(val activity: Activity, val context: Context, val subwayApp
             if (exception != null) Log.e("Kakao login Fail -> ", exception.message.toString())
         }
     }
+
+    fun moveToRankingActvityOnclick(view: View) {
+        moveToRankingActvity()
+    }
+
+    val moveToRankingActvity: () -> (Unit) = {
+        context.startActivity(context.intentFor<RankingActivity>())
+    }
+
+
 }

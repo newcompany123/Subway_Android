@@ -38,7 +38,7 @@ class APIClient(val application: SubwayApplication) {
             val original = chain.request()
             val builder = original.newBuilder()
             if (application.isLogin) {
-                builder.header("Authorization", User(application).token)
+                builder.header("Authorization", User.getInstance().token)
             }
             builder.method(original.method(), original.body())
             val request = builder.build()
@@ -53,7 +53,6 @@ class APIClient(val application: SubwayApplication) {
                 .addNetworkInterceptor(StethoInterceptor())
                 .addInterceptor(headerInterceptorForLoginUser)
                 .build()
-
         if (null == retrofit) {
             retrofit = Retrofit.Builder()
                     .baseUrl(Constants.BASE_URL)

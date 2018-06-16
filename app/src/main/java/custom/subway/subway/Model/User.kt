@@ -4,29 +4,43 @@ import android.content.Context
 import android.content.SharedPreferences
 import com.google.gson.annotations.SerializedName
 import custom.subway.subway.Utility.Constants
+import custom.subway.subway.Utility.SubwayApplication.Companion.context
+import io.reactivex.subjects.PublishSubject
 import java.io.Serializable
 
 
-open class User(val context: Context) : Serializable {
+open class User private constructor() : Serializable {
+
+
+    val loginCheckPublishSubject = PublishSubject.create<Boolean>()
+
+    companion object {
+        private val userInstance: User by lazy { User() }
+
+        fun getInstance(): User = userInstance
+    }
+
+    var tokenSharedPreferences: SharedPreferences? = context?.getSharedPreferences(Constants.USER_TOKEN_PREF, Context.MODE_PRIVATE)
 
     @SerializedName("token")
-    var tokenFromServer: String = ""
-    var tokenSharedPreferences: SharedPreferences = context.getSharedPreferences(Constants.USER_TOKEN_PREF, Context.MODE_PRIVATE)
-
-    @SerializedName("registered_token")
     var token: String = ""
         set(userNewToken) {
             field = userNewToken
-            with(tokenSharedPreferences.edit()) {
-                putString(Constants.TOKEN_KEY, userNewToken).commit()
+            tokenSharedPreferences?.let {
+                with(it.edit()) {
+                    putString(Constants.TOKEN_KEY, userNewToken).commit()
+                }
+                checkLogin() // 토큰이 설정 되면 로그인 상태 변경해준다
             }
-            checkLogin() // 토큰이 설정 되면 로그인 상태 변경해준다
         }
 
-    fun checkLogin(): Boolean {
-        with(context.getSharedPreferences(Constants.USER_TOKEN_PREF, Context.MODE_PRIVATE).getString(Constants.TOKEN_KEY, Constants.EMPTY_TOKEN)) {
-            if (this == Constants.EMPTY_TOKEN) return false else return true
+    fun checkLogin() {
+        context?.let {
+            with(it.getSharedPreferences(Constants.USER_TOKEN_PREF, Context.MODE_PRIVATE).getString(Constants.TOKEN_KEY, Constants.EMPTY_TOKEN)) {
+                if (this == Constants.EMPTY_TOKEN) return loginCheckPublishSubject.onNext(false)
+                else return loginCheckPublishSubject.onNext(true)
+            }
         }
-        return false
+        loginCheckPublishSubject.onNext(false)
     }
 }
