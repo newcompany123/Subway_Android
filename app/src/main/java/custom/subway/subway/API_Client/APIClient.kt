@@ -2,7 +2,6 @@ package custom.subway.subway.API_Client
 
 
 import com.facebook.stetho.okhttp3.StethoInterceptor
-import custom.subway.subway.Model.User
 import custom.subway.subway.Utility.Constants
 import custom.subway.subway.Utility.SubwayApplication
 import okhttp3.Interceptor
@@ -38,7 +37,8 @@ class APIClient(val application: SubwayApplication) {
             val original = chain.request()
             val builder = original.newBuilder()
             if (application.isLogin) {
-                builder.header("Authorization", User.getInstance().token)
+//                builder.header("Authorization", "Token " + User.getInstance().token)
+                builder.header("Authorization", "token " + "JMeVwBMPAySzluUZplW5mQMmN65wDTvnVbnpibrz")
             }
             builder.method(original.method(), original.body())
             val request = builder.build()

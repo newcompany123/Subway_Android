@@ -8,7 +8,7 @@
 
         <variable
             name="loginViewModel"
-            type="custom.subway.subway.viewmodel.LoginViewModel" />
+            type="custom.subway.subway.Login.LoginViewModel" />
     </data>
 
 

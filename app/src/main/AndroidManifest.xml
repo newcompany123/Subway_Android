@@ -16,7 +16,7 @@
             android:name="com.kakao.sdk.AppKey"
             android:value="@string/kakao_app_key" />
 
-        <activity android:name=".view.ui.LoginActivity">
+        <activity android:name=".Splash.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -44,7 +44,8 @@
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
-        <activity android:name=".view.ui.RankingActivity"></activity>
+        <activity android:name=".Ranking.RankingActivity" />
+        <activity android:name=".Login.LoginActivity"></activity>
     </application>
 
 </manifest>

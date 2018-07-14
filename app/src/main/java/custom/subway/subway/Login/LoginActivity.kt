@@ -1,15 +1,12 @@
-package custom.subway.subway.view.ui
+package custom.subway.subway.Login
 
 import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.util.Log
-import com.kakao.auth.Session
-import custom.subway.subway.Contract.LoginContract
 import custom.subway.subway.R
 import custom.subway.subway.Utility.BaseActivity
 import custom.subway.subway.databinding.LoginActivityBinding
-import custom.subway.subway.viewmodel.LoginViewModel
 
 
 class LoginActivity : BaseActivity(), LoginContract {
@@ -27,20 +24,11 @@ class LoginActivity : BaseActivity(), LoginContract {
         binding.loginViewModel = loginViewModel
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        Session.getCurrentSession().removeCallback(LoginViewModel.SessionCallback(null))
-    }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-//        if (Session.getCurrentSession().handleActivityResult(requestCode, resultCode, data)) return
         Log.d("testt", "onActivityResult")
         loginViewModel.callbackManager.onActivityResult(requestCode, resultCode, data)
         super.onActivityResult(requestCode, resultCode, data)
-    }
-
-    override fun moveMainActivity() {
-        super.moveMainActivity()
     }
 
     override fun facebookLoginIsCompleted() {

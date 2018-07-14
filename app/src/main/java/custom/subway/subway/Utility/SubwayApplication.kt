@@ -11,6 +11,11 @@ class SubwayApplication : MultiDexApplication() {
 
     var isLogin: Boolean = false
 
+    init {
+        observeUserLoginStatus()
+        User().checkLogin()
+    }
+
     companion object {
         var context: SubwayApplication? = null
         fun getSubwayApplicationContext(): SubwayApplication? {
@@ -25,9 +30,12 @@ class SubwayApplication : MultiDexApplication() {
 //        KakaoSDK.init(KakaoSDKAdapter.Companion.SDKAdapter())
         Stetho.initializeWithDefaults(this)
 
-        observeUserLoginStatus()
+        initialUserLoginCheck()
     }
 
+    val initialUserLoginCheck: () -> (Unit) = {
+        User.getInstance().checkLogin()
+    }
 
     fun observeUserLoginStatus() {
         User.getInstance().loginCheckPublishSubject

@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <import type="android.view.Gravity" />
+
+        <variable
+            name="rankingItemViewModel"
+            type="custom.subway.subway.Ranking.RankingItemViewModel" />
+    </data>
+
+
+    <LinearLayout
+        gravityBaseOnPosition="@{rankingItemViewModel.position}"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <FrameLayout
+            marginBaseOnPosition="@{rankingItemViewModel.position}"
+            android:layout_width="match_parent"
+            android:layout_height="230dp"
+            android:onClick="@{(view)-> rankingItemViewModel.itemOnClick(view)}">
+
+            <ImageView
+                index="@{rankingItemViewModel.position}"
+                sandwich="@{rankingItemViewModel.subway.sandwich}"
+                android:layout_width="341dp"
+                android:layout_height="162dp"
+                android:scaleType="fitXY" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_gravity="bottom"
+                android:background="#80f1f1f1"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="56dp"
+                    android:layout_height="4dp"
+                    android:layout_gravity="bottom"
+                    android:src="@drawable/bar_green_1"
+                    android:visibility="@{rankingItemViewModel.marginLeftOrRight ? View.GONE : View.VISIBLE}" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="17dp"
+                    android:text="@{Integer.toString(rankingItemViewModel.position+1)}"
+                    android:textColor="#4a4a4a"
+                    android:textSize="64dp"
+                    android:textStyle="bold|italic"
+                    android:visibility="@{rankingItemViewModel.marginLeftOrRight ? View.GONE : View.VISIBLE}" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:ellipsize="end"
+                    android:gravity="top|center_horizontal"
+                    android:maxLines="3"
+                    android:text="@{rankingItemViewModel.subway.name.name}"
+                    android:textColor="#4a4a4a"
+                    android:textSize="26dp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{Integer.toString(rankingItemViewModel.position+1)}"
+                    android:textColor="#4a4a4a"
+                    android:textSize="64dp"
+                    android:textStyle="bold|italic"
+                    android:visibility="@{rankingItemViewModel.marginLeftOrRight ? View.VISIBLE : View.GONE}" />
+
+                <ImageView
+                    android:layout_width="56dp"
+                    android:layout_height="4dp"
+                    android:layout_gravity="bottom"
+                    android:src="@drawable/bar_green_1"
+                    android:visibility="@{rankingItemViewModel.marginLeftOrRight ? View.VISIBLE : View.GONE}" />
+
+            </LinearLayout>
+
+        </FrameLayout>
+
+        <LinearLayout
+            gravityBaseOnPosition="@{rankingItemViewModel.position}"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="7dp"
+            android:orientation="horizontal"
+            android:visibility="@{rankingItemViewModel.detailVisivility ? View.GONE : View.VISIBLE}">
+
+            <LinearLayout
+                android:layout_width="114dp"
+                android:layout_height="25dp"
+                android:background="@drawable/boxempty2_2x"
+                android:gravity="center_vertical"
+                android:onClick="@{(view)->rankingItemViewModel.likeOnClick(view)}"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="14dp"
+                    android:layout_height="14dp"
+                    android:layout_marginLeft="9dp"
+                    android:layout_marginRight="9dp"
+                    android:src="@{rankingItemViewModel.subway.auth_user_like_state ? @drawable/iconheartcolour_2x : @drawable/iconheartline_2x}" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{String.valueOf(rankingItemViewModel.subway.inventor.like_count)}"
+                    android:textColor="#4a4a4a"
+                    android:textSize="10dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="명이 좋아해요!"
+                    android:textColor="#4a4a4a"
+                    android:textSize="10dp" />
+
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:src="@{rankingItemViewModel.subway.auth_user_bookmark_state ?  @drawable/iconsaveyellow_2x:@drawable/iconsave_2x }" />
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/iconshare_2x" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            marginBaseOnPosition="@{rankingItemViewModel.position}"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#80f1f1f1"
+            android:orientation="vertical"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:visibility="@{rankingItemViewModel.detailVisivility ? View.VISIBLE : View.GONE, default = gone}">
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="9dp"
+                android:layout_marginTop="29dp"
+                android:text="메인 재료"
+                android:textColor="#4a4a4a"
+                android:textSize="16dp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:id="@+id/main_component_container"
+                context="@{rankingItemViewModel.context}"
+                mainComponent="@{rankingItemViewModel.subway.sandwich.main_ingredient}"
+                position="@{rankingItemViewModel.position}"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:padding="8dp"
+                android:background="#ffffff"
+                android:orientation="vertical" />
+
+
+            <LinearLayout
+                gravityBaseOnPosition="@{rankingItemViewModel.position}"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="7dp"
+                android:orientation="horizontal"
+                android:visibility="@{rankingItemViewModel.detailVisivility ? View.VISIBLE : View.GONE}">
+
+                <LinearLayout
+                    android:layout_width="114dp"
+                    android:layout_height="25dp"
+                    android:layout_marginBottom="30dp"
+                    android:background="@drawable/boxempty2_2x"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="14dp"
+                        android:layout_height="14dp"
+                        android:layout_marginLeft="9dp"
+                        android:layout_marginRight="9dp"
+                        android:src="@{rankingItemViewModel.subway.auth_user_like_state ? @drawable/iconheartcolour_2x : @drawable/iconheartline_2x}" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{String.valueOf(rankingItemViewModel.subway.inventor.like_count)}"
+                        android:textColor="#4a4a4a"
+                        android:textSize="10dp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="명이 좋아해요!"
+                        android:textColor="#4a4a4a"
+                        android:textSize="10dp" />
+
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:src="@{rankingItemViewModel.subway.auth_user_bookmark_state ?  @drawable/iconsaveyellow_2x:@drawable/iconsave_2x }" />
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/iconshare_2x" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/itemBorder"
+            android:layout_width="match_parent"
+            android:layout_height="34dp"
+            android:background="#ffffff" />
+
+    </LinearLayout>
+
+</layout>

@@ -1,4 +1,4 @@
-package custom.subway.subway.Contract
+package custom.subway.subway.Login
 
 interface LoginContract {
 
