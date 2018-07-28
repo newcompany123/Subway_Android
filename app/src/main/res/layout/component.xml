@@ -10,7 +10,7 @@
         android:id="@+id/component_img"
         android:layout_width="47dp"
         android:layout_height="46dp"
-        android:scaleType="centerCrop" />
+        android:scaleType="fitXY" />
 
     <TextView
         android:id="@+id/component_name"

@@ -17,6 +17,7 @@ class RankingListAdapter(
 ) : RecyclerView.Adapter<RankingListAdapter.RankingListAdapterViewHolder>() {
 
     lateinit var binding: RankingItemBinding
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RankingListAdapterViewHolder {
 
         binding = DataBindingUtil.inflate(
@@ -44,6 +45,8 @@ class RankingListAdapter(
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(subway: Subway, position: Int) {
+            binding.subwayComponentView!!.rankingItemViewModel = RankingItemViewModel(itemView.context, subway, position)
+
             with(binding) {
                 rankingItemViewModel = RankingItemViewModel(
                         itemView.context,

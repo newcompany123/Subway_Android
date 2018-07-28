@@ -2,9 +2,11 @@ package custom.subway.subway.Utility
 
 import android.support.multidex.MultiDexApplication
 import com.facebook.stetho.Stetho
+import com.uphyca.stetho_realm.RealmInspectorModulesProvider
 import custom.subway.subway.Model.User
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
+import io.realm.Realm
 
 class SubwayApplication : MultiDexApplication() {
 
@@ -14,6 +16,7 @@ class SubwayApplication : MultiDexApplication() {
     init {
         observeUserLoginStatus()
         User().checkLogin()
+
     }
 
     companion object {
@@ -28,7 +31,14 @@ class SubwayApplication : MultiDexApplication() {
         context = this
         SubwayApplication.getSubwayApplicationContext()
 //        KakaoSDK.init(KakaoSDKAdapter.Companion.SDKAdapter())
-        Stetho.initializeWithDefaults(this)
+
+
+        Realm.init(this)
+        Stetho.initialize(
+                Stetho.newInitializerBuilder(this)
+                        .enableDumpapp(Stetho.defaultDumperPluginsProvider(this))
+                        .enableWebKitInspector(RealmInspectorModulesProvider.builder(this).build())
+                        .build())
 
         initialUserLoginCheck()
     }

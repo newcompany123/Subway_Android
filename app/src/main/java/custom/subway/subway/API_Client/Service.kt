@@ -20,6 +20,11 @@ interface Service {
     @GET("/recipe/")
     fun getAllProductList(): Observable<SubwayList>
 
+
+    @GET("/recipe/")
+    fun getAllProductListBySearchWord(@Query("search") searchWrod: String): Observable<SubwayList>
+
+
     @POST("/recipe/{sandwichId}/like/")
     fun likeThisSandwich(@Path("sandwichId") sandwichId: String): Observable<ResponseBody>
 

@@ -2,6 +2,7 @@ package custom.subway.subway.Ranking
 
 import android.content.Context
 import android.databinding.ObservableField
+import android.util.Log
 import android.view.View
 import custom.subway.subway.Model.Subway
 
@@ -18,13 +19,12 @@ class RankingItemViewModel(
     init {
         detailVisivility.set(false)
         if ((position + 1) % 2 == 0) marginLeftOrRight = false else true
+        Log.d("bsbs", "" + subway)
     }
 
     fun itemOnClick(view: View) {
         detailVisivility.set(!detailVisivility.get()!!)
     }
-
-
 
 
     fun likeOnClick(view: View) {

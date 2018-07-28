@@ -8,6 +8,7 @@ import custom.subway.subway.Model.SubwayList
 import custom.subway.subway.R
 import custom.subway.subway.Utility.BaseActivity
 import custom.subway.subway.databinding.ActivityRankingBinding
+import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent
 
 
 class RankingActivity : BaseActivity(), RankingContract {
@@ -15,12 +16,15 @@ class RankingActivity : BaseActivity(), RankingContract {
 
     lateinit var rankingViewModel: RankingViewModel
     lateinit var rankingListAdapter: RankingListAdapter
+    lateinit var serachwordListAdapter: SearchWordListAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         initDataBinding()
+        abc()
     }
+
 
     fun initDataBinding() {
         rankingViewModel = RankingViewModel(this)
@@ -40,7 +44,24 @@ class RankingActivity : BaseActivity(), RankingContract {
     }
 
 
-    override fun expandClickedRankingItem() {
-
+    override fun showRecentSerachList(searchWordList: ArrayList<String>) {
+        val serachBoxRecyclerView = findViewById<RecyclerView>(R.id.serachWordList)
+        serachBoxRecyclerView.layoutManager = LinearLayoutManager(this)
+        serachwordListAdapter = SearchWordListAdapter(
+                context = this,
+                searchWordList = searchWordList.reversed() as ArrayList<String>
+        )
+        serachBoxRecyclerView.adapter = serachwordListAdapter
     }
+
+    fun abc() {
+        KeyboardVisibilityEvent.setEventListener(
+                this@RankingActivity
+        ) {
+            rankingViewModel.searchBoxVisibility.set(it)
+            if (it) rankingViewModel.requestRecentWordList()
+        }
+    }
+
+
 }

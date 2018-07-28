@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="rankingItemViewModel"
+            type="custom.subway.subway.Ranking.RankingItemViewModel" />
+    </data>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                gravityBaseOnPosition="@{rankingItemViewModel.position}"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="9dp"
+                android:layout_marginTop="29dp"
+                android:text="메인 재료"
+                android:textColor="#4a4a4a"
+                android:textSize="16dp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                context="@{rankingItemViewModel.context}"
+                mainComponent="@{rankingItemViewModel.subway.sandwich.main_ingredient}"
+                position="@{rankingItemViewModel.position}"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:background="#ffffff"
+                android:orientation="vertical"
+                android:padding="8dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                gravityBaseOnPosition="@{rankingItemViewModel.position}"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="9dp"
+                android:text="빵 선택"
+                android:textColor="#4a4a4a"
+                android:textSize="16dp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                bread="@{rankingItemViewModel.subway.bread}"
+                context="@{rankingItemViewModel.context}"
+                position="@{rankingItemViewModel.position}"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:background="#ffffff"
+                android:orientation="vertical"
+                android:padding="8dp" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                gravityBaseOnPosition="@{rankingItemViewModel.position}"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="9dp"
+                android:text="치즈 선택"
+                android:textColor="#4a4a4a"
+                android:textSize="16dp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                cheese="@{rankingItemViewModel.subway.cheese}"
+                context="@{rankingItemViewModel.context}"
+                position="@{rankingItemViewModel.position}"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:background="#ffffff"
+                android:orientation="vertical"
+                android:padding="8dp" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                gravityBaseOnPosition="@{rankingItemViewModel.position}"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="9dp"
+                android:text="추가 선택"
+                android:textColor="#4a4a4a"
+                android:textSize="16dp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                context="@{rankingItemViewModel.context}"
+                position="@{rankingItemViewModel.position}"
+                topping="@{rankingItemViewModel.subway.toppings}"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:background="#ffffff"
+                android:orientation="vertical"
+                android:padding="8dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                gravityBaseOnPosition="@{rankingItemViewModel.position}"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="9dp"
+                android:text="야채 선택"
+                android:textColor="#4a4a4a"
+                android:textSize="16dp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                context="@{rankingItemViewModel.context}"
+                position="@{rankingItemViewModel.position}"
+                vegetable="@{rankingItemViewModel.subway.vegetables}"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:background="#ffffff"
+                android:orientation="vertical"
+                android:padding="8dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                gravityBaseOnPosition="@{rankingItemViewModel.position}"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="9dp"
+                android:text="소스 선택"
+                android:textColor="#4a4a4a"
+                android:textSize="16dp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                context="@{rankingItemViewModel.context}"
+                position="@{rankingItemViewModel.position}"
+                sauces="@{rankingItemViewModel.subway.sauces}"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:background="#ffffff"
+                android:orientation="vertical"
+                android:padding="8dp" />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</layout>

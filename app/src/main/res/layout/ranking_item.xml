@@ -22,6 +22,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
+
         <FrameLayout
             marginBaseOnPosition="@{rankingItemViewModel.position}"
             android:layout_width="match_parent"
@@ -156,36 +157,17 @@
             android:paddingRight="16dp"
             android:visibility="@{rankingItemViewModel.detailVisivility ? View.VISIBLE : View.GONE, default = gone}">
 
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="9dp"
-                android:layout_marginTop="29dp"
-                android:text="메인 재료"
-                android:textColor="#4a4a4a"
-                android:textSize="16dp"
-                android:textStyle="bold" />
-
-            <LinearLayout
-                android:id="@+id/main_component_container"
-                context="@{rankingItemViewModel.context}"
-                mainComponent="@{rankingItemViewModel.subway.sandwich.main_ingredient}"
-                position="@{rankingItemViewModel.position}"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="4dp"
-                android:padding="8dp"
-                android:background="#ffffff"
-                android:orientation="vertical" />
-
+            <include
+                android:id="@+id/subwayComponentView"
+                layout="@layout/component_container" />
 
             <LinearLayout
                 gravityBaseOnPosition="@{rankingItemViewModel.position}"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
+                android:layout_marginBottom="31dp"
+                android:layout_marginLeft="4dp"
+                android:layout_marginRight="4dp"
                 android:layout_marginTop="7dp"
                 android:orientation="horizontal"
                 android:visibility="@{rankingItemViewModel.detailVisivility ? View.VISIBLE : View.GONE}">
@@ -193,9 +175,9 @@
                 <LinearLayout
                     android:layout_width="114dp"
                     android:layout_height="25dp"
-                    android:layout_marginBottom="30dp"
                     android:background="@drawable/boxempty2_2x"
                     android:gravity="center_vertical"
+                    android:onClick="@{(view)->rankingItemViewModel.likeOnClick(view)}"
                     android:orientation="horizontal">
 
                     <ImageView
@@ -234,6 +216,7 @@
                     android:src="@drawable/iconshare_2x" />
 
             </LinearLayout>
+
 
         </LinearLayout>
 

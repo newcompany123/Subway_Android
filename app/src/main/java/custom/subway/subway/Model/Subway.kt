@@ -14,11 +14,12 @@ data class Subway(
         val id: Int,
         val name: Name,
         val sandwich: Sandwich,
-        val cheese: cheese,
+        val cheese: Cheese,
+        val bread: Bread,
         val vegetables: ArrayList<Vegetable>?,
         val toppings: ArrayList<Topping>,
         val sauces: ArrayList<Sauces>,
-        val toasting: Boolean,
+        val toasting: Toast,
         val inventor: Inventor,
         var auth_user_like_state: Boolean,
         var auth_user_bookmark_state: Boolean,
@@ -39,6 +40,14 @@ data class Inventor(
         val eamil: String,
         val like_bookmartk_count: Int,
         val like_count: Int
+)
+
+data class Toast(
+    val id: Int,
+    val name: String,
+    val image : String,
+    val Image3x: String
+
 )
 
 data class Sandwich(
@@ -66,7 +75,7 @@ data class Bread(
         val image3x: String
 )
 
-data class cheese(
+data class Cheese(
         val id: Int,
         val name: String,
         val image: String,

@@ -6,6 +6,9 @@ apply plugin: 'kotlin-android-extensions'
 
 apply plugin: 'kotlin-kapt'
 
+apply plugin: 'realm-android'
+
+
 android {
     compileSdkVersion 27
     defaultConfig {
@@ -80,6 +83,12 @@ dependencies {
     //Glide
     kapt "com.github.bumptech.glide:compiler:$glideVersion"
     implementation "com.github.bumptech.glide:glide:$glideVersion"
+
+    //Realm
+    implementation 'com.uphyca:stetho_realm:2.1.0'
+
+    //SofyKeyboard
+    implementation 'net.yslibrary.keyboardvisibilityevent:keyboardvisibilityevent:2.1.0'
 
 
 }

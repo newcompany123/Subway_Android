@@ -6,6 +6,6 @@ interface RankingContract {
 
     fun showRanking(subwayList: SubwayList)
 
-    fun expandClickedRankingItem()
+    fun showRecentSerachList(searchWordList: ArrayList<String>)
 
 }
