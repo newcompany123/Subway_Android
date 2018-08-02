@@ -29,12 +29,19 @@
             android:layout_height="230dp"
             android:onClick="@{(view)-> rankingItemViewModel.itemOnClick(view)}">
 
-            <ImageView
-                index="@{rankingItemViewModel.position}"
-                sandwich="@{rankingItemViewModel.subway.sandwich}"
-                android:layout_width="341dp"
-                android:layout_height="162dp"
-                android:scaleType="fitXY" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                gravityBaseOnPosition="@{rankingItemViewModel.position}"
+                android:orientation="horizontal">
+
+                <ImageView
+                    index="@{rankingItemViewModel.position}"
+                    sandwich="@{rankingItemViewModel.subway.sandwich}"
+                    android:layout_width="341dp"
+                    android:layout_height="162dp"
+                    android:scaleType="fitXY" />
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"

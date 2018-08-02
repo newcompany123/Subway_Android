@@ -27,11 +27,19 @@
             android:gravity="center"
             android:orientation="horizontal">
 
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginLeft="13dp"
+                android:onClick="@{rankingViewModel.backPreseedAndShowRanking}"
+                android:padding="4dp"
+                android:src="@drawable/path_3"
+                android:visibility="@{rankingViewModel.backButtonVisibility ? View.VISIBLE : View.INVISIBLE, default = invisible}" />
+
             <FrameLayout
                 android:layout_width="0dp"
                 android:layout_height="24dp"
                 android:layout_gravity="center"
-                android:layout_marginLeft="17dp"
                 android:layout_marginRight="7dp"
                 android:layout_weight="1"
                 android:background="@drawable/bar_search">
@@ -60,6 +68,7 @@
                         android:imeOptions="actionSearch"
                         android:inputType="text"
                         android:onClick="@{rankingViewModel.searchBoxClickListenr}"
+                        android:text="@{rankingViewModel.requestedSearchWord}"
                         android:textColor="#a9a9a9"
                         android:textColorHint="#a9a9a9"
                         android:textSize="12dp" />
@@ -93,10 +102,10 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
+                android:background="#ffffff"
                 android:orientation="vertical"
                 android:padding="16dp"
-                android:background="#ffffff"
                 android:visibility="@{rankingViewModel.searchBoxVisibility ? View.VISIBLE : View.GONE, default = gone}">
 
                 <LinearLayout
@@ -117,6 +126,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:onClick="@{rankingViewModel.deleteAllSearchWord}"
                         android:text="전체 삭제"
                         android:textColor="#9b9b9b"
                         android:textSize="12dp" />

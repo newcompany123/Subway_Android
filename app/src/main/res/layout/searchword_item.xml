@@ -9,8 +9,8 @@
         <import type="android.view.Gravity" />
 
         <variable
-            name="searchWordViewModel"
-            type="custom.subway.subway.Ranking.SerachWordViewModel" />
+            name="searchWordItemViewModel"
+            type="custom.subway.subway.Ranking.SearchWordItemViewModel" />
     </data>
 
     <LinearLayout
@@ -21,16 +21,23 @@
         android:orientation="horizontal">
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="30dp"
             android:layout_marginRight="10dp"
-            android:text="@{searchWordViewModel.searchWord}"
+            android:layout_weight="1"
+            android:ellipsize="end"
+            android:gravity="center_vertical"
+            android:maxLines="1"
+            android:onClick="@{searchWordItemViewModel.searchBaseOnRecentSearchWord}"
+            android:text="@{searchWordItemViewModel.searchWord}"
             android:textColor="#4a4a4a"
-            android:textSize="14dp" />
+            android:textSize="16dp" />
 
         <ImageView
-            android:layout_width="12dp"
-            android:layout_height="12dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:onClick="@{searchWordItemViewModel.deleteSearchWord}"
+            android:padding="5dp"
             android:src="@drawable/ic_delete" />
 
     </LinearLayout>

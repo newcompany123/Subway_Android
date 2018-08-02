@@ -16,7 +16,6 @@ class SubwayApplication : MultiDexApplication() {
     init {
         observeUserLoginStatus()
         User().checkLogin()
-
     }
 
     companion object {

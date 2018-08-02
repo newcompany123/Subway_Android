@@ -22,12 +22,12 @@ class RankingActivity : BaseActivity(), RankingContract {
         super.onCreate(savedInstanceState)
 
         initDataBinding()
-        abc()
+        initiateSoftkeyboardVisibilityListener()
     }
 
 
     fun initDataBinding() {
-        rankingViewModel = RankingViewModel(this)
+        rankingViewModel = RankingViewModel(this, this@RankingActivity)
         val binding: ActivityRankingBinding = DataBindingUtil.setContentView(this, R.layout.activity_ranking)
         binding.rankingViewModel = rankingViewModel
     }
@@ -43,18 +43,27 @@ class RankingActivity : BaseActivity(), RankingContract {
         rankingListRecyclerView.adapter = rankingListAdapter
     }
 
-
-    override fun showRecentSerachList(searchWordList: ArrayList<String>) {
+    override fun showRecentSerachList(searchWordList: ArrayList<String>?) {
         val serachBoxRecyclerView = findViewById<RecyclerView>(R.id.serachWordList)
         serachBoxRecyclerView.layoutManager = LinearLayoutManager(this)
+
         serachwordListAdapter = SearchWordListAdapter(
+                rankingContract = this,
                 context = this,
-                searchWordList = searchWordList.reversed() as ArrayList<String>
+                searchWordList = searchWordList!!.reversed()
         )
         serachBoxRecyclerView.adapter = serachwordListAdapter
     }
 
-    fun abc() {
+    override fun reDrawSearchWord() {
+        rankingViewModel.requestRecentWordList()
+    }
+
+    override fun showRankingBaseOnSearchword(searchWord: String) {
+        rankingViewModel.requestSubwayList(searchWord)
+    }
+
+    fun initiateSoftkeyboardVisibilityListener() {
         KeyboardVisibilityEvent.setEventListener(
                 this@RankingActivity
         ) {

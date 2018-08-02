@@ -6,6 +6,9 @@ interface RankingContract {
 
     fun showRanking(subwayList: SubwayList)
 
-    fun showRecentSerachList(searchWordList: ArrayList<String>)
+    fun showRecentSerachList(searchWordList: ArrayList<String>?)
 
+    fun reDrawSearchWord()
+
+    fun showRankingBaseOnSearchword(searchWord: String)
 }

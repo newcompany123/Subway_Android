@@ -61,45 +61,45 @@ data class Sandwich(
 )
 
 data class MainIngredient(
-        val id: Int,
-        val name: String,
-        val image: String,
-        val image3x: String,
-        val quantity: String
+        val id: Int?,
+        val name: String?,
+        val image: String?,
+        val image3x: String?,
+        val quantity: String?
 )
 
 data class Bread(
-        val id: Int,
-        val name: String,
-        val image: String,
-        val image3x: String
+        val id: Int?,
+        val name: String?,
+        val image: String?,
+        val image3x: String?
 )
 
 data class Cheese(
-        val id: Int,
-        val name: String,
-        val image: String,
-        val image3x: String
+        val id: Int?,
+        val name: String?,
+        val image: String?,
+        val image3x: String?
 )
 
 data class Vegetable(
-        val id: Int,
-        val name: String,
-        val quantity: String,
-        val image: String,
-        val image3x: String
+        val id: Int?,
+        val name: String?,
+        val quantity: String?,
+        val image: String?,
+        val image3x: String?
 )
 
 data class Topping(
-        val id: Int,
-        val name: String,
-        val image: String,
-        val image3x: String
+        val id: Int?,
+        val name: String?,
+        val image: String?,
+        val image3x: String?
 )
 
 data class Sauces(
-        val id: Int,
-        val name: String,
-        val image: String,
-        val image3x: String
+        val id: Int?,
+        val name: String?,
+        val image: String?,
+        val image3x: String?
 )

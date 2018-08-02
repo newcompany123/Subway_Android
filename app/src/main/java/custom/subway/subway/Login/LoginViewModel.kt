@@ -13,7 +13,6 @@ import com.facebook.FacebookSdk.getApplicationContext
 import com.facebook.appevents.AppEventsLogger
 import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
-import com.kakao.auth.network.response.AccessTokenInfoResponse
 import custom.subway.subway.API_Client.APIClient
 import custom.subway.subway.Model.User
 import custom.subway.subway.R
@@ -22,6 +21,8 @@ import custom.subway.subway.Utility.SubwayApplication
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
+import okhttp3.MediaType
+import okhttp3.RequestBody
 import org.jetbrains.anko.intentFor
 
 class LoginViewModel(val activity: Activity, val context: Context, val subwayApplication: SubwayApplication) : BaseObservable() {
@@ -38,7 +39,6 @@ class LoginViewModel(val activity: Activity, val context: Context, val subwayApp
             FacebookSdk.sdkInitialize(getApplicationContext())
             AppEventsLogger.activateApp(context)
             callbackManager = CallbackManager.Factory.create()
-//        CheckKakoSession()
         }
     }
 
@@ -85,31 +85,47 @@ class LoginViewModel(val activity: Activity, val context: Context, val subwayApp
                 })
     }
 
-    private fun registerSubwayService(loginResult: LoginResult? = null, loginResultKakao: AccessTokenInfoResponse? = null) {
-        if (null == loginResultKakao) {
-            loginResult!!.accessToken?.token?.let {
-                Log.d("testt", "FACEBOOK TOKEN : " + it)
-                APIClient(application = subwayApplication)
-                        .getAPIService()
-                        .registService(it.toString())
-                        .subscribeOn(Schedulers.single())
-                        .distinct()
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribeBy(
-                                onNext = { createdUser ->
-                                    createdUser?.token?.let {
-                                        User.getInstance().token = it
-                                        moveToRankingActvity()
-                                    }
-                                },
-                                onError = {
-                                    loginContract.facebookLoginIsFailed()
-                                },
-                                onComplete = {
-                                    loginContract.facebookLoginIsCompleted()
+    class test(val access_token: String) {
+
+    }
+
+
+    private fun registerSubwayService(
+            loginResult: LoginResult? = null
+    ) {
+
+
+        loginResult!!.accessToken?.token?.let {
+            Log.d("testt", "FACEBOOK TOKEN : " + it)
+//            val jsonObject = JsonObject()
+//            jsonObject.addProperty("access_token", it)
+//            val requestBody = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), jsonObject.toString())
+//
+
+//            val somevalue = "somevalue"
+            val body = RequestBody.create(MediaType.parse("multipart/form-data"), it)
+
+
+            APIClient(application = subwayApplication)
+                    .getAPIService()
+                    .registService(test(it.toString()))
+                    .subscribeOn(Schedulers.single())
+                    .distinct()
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribeBy(
+                            onNext = { createdUser ->
+                                createdUser?.token?.let {
+                                    User.getInstance().token = it
+                                    moveToRankingActvity()
                                 }
-                        )
-            }
+                            },
+                            onError = {
+                                loginContract.facebookLoginIsFailed()
+                            },
+                            onComplete = {
+                                loginContract.facebookLoginIsCompleted()
+                            }
+                    )
         }
     }
 
