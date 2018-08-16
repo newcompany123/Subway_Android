@@ -19,7 +19,6 @@ class RankingListAdapter(
     lateinit var binding: RankingItemBinding
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RankingListAdapterViewHolder {
-
         binding = DataBindingUtil.inflate(
                 LayoutInflater.from(parent.context),
                 R.layout.ranking_item, parent, false

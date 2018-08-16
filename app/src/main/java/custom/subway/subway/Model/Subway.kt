@@ -25,7 +25,8 @@ data class Subway(
         var auth_user_bookmark_state: Boolean,
         var like_count: Int,
         var bookmark_count: Int,
-        var like_bookmark_count: Int
+        var like_bookmark_count: Int,
+        var image : String
 ) : Serializable
 
 

@@ -1,20 +1,20 @@
 package custom.subway.subway.Ranking
 
-import android.app.Activity
 import android.databinding.ObservableField
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.KeyEvent
 import android.view.View
 import android.view.inputmethod.EditorInfo
-import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.TextView
 import custom.subway.subway.API_Client.APIClient
 import custom.subway.subway.LocalDB.SearchWordTable
 import custom.subway.subway.LocalDB.deleteAllRecentSearchWordFromDB
 import custom.subway.subway.LocalDB.saveRecentSerachWordToDB
+import custom.subway.subway.Utility.Constants
 import custom.subway.subway.Utility.SubwayApplication
+import custom.subway.subway.Utility.hideSoftKeyboard
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
@@ -29,13 +29,43 @@ class RankingViewModel(
     var searchBoxVisibility: ObservableField<Boolean> = ObservableField()
     var requestedSearchWord: ObservableField<String> = ObservableField()
     var backButtonVisibility: ObservableField<Boolean> = ObservableField()
+    var filterVisibility: ObservableField<Boolean> = ObservableField()
     val startSerachListener: StartSerachListener
 
+
     init {
+        requestFilterList()
         requestSubwayList(null)
         searchBoxVisibility.set(false)
         backButtonVisibility.set(false)
+        filterVisibility.set(false)
+
         startSerachListener = StartSerachListener()
+    }
+
+
+    fun sortingOrderOnClick(sortingOrder : View){
+        Constants.selectedSortingOrder.set((sortingOrder as TextView).text.toString())
+    }
+
+    fun categoryFilterOnClick(sortingOrder : View){
+        Constants.seletedCategoryFilter.set((sortingOrder as TextView).text.toString())
+    }
+
+    fun requestFilterList() {
+        APIClient(application = SubwayApplication.getSubwayApplicationContext()!!)
+                .getAPIService()
+                .requestFilterList()
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeBy(
+                        onNext = {
+                            rankingContract.showFilter(it)
+                        },
+                        onError = {
+                        }
+                )
+
     }
 
     fun requestSubwayList(searchWrod: String?) {
@@ -66,7 +96,7 @@ class RankingViewModel(
                                 onNext = {
                                     searchBoxVisibility.set(false)
                                     rankingContract.showRanking(it)
-                                    hideSoftKeyboard()
+                                    hideSoftKeyboard(activity)
                                 },
                                 onError = {
                                 }
@@ -75,6 +105,23 @@ class RankingViewModel(
         }
     }
 
+    fun applySearchFilter(view: View) {
+        backButtonVisibility.set(true)
+        APIClient(application = SubwayApplication.getSubwayApplicationContext()!!)
+                .getAPIService()
+                .requestRankingBasedOnFilter("", "")
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeBy(
+                        onNext = {
+                            filterVisibility.set(!filterVisibility.get()!!)
+                            rankingContract.showRanking(it)
+                            hideSoftKeyboard(activity)
+                        },
+                        onError = {
+                        }
+                )
+    }
 
     fun backPreseedAndShowRanking(view: View) {
         backButtonVisibility.set(false)
@@ -82,6 +129,10 @@ class RankingViewModel(
         requestSubwayList(null)
     }
 
+    fun showOrCloseFilter(view: View) {
+        hideSoftKeyboard(activity)
+        filterVisibility.set(!filterVisibility.get()!!)
+    }
 
     fun requestRecentWordList() {
         val searchwordList = ArrayList<String>()
@@ -112,6 +163,11 @@ class RankingViewModel(
         override fun afterTextChanged(s: Editable) {}
     }
 
+    fun deleteAllSearchWord(view: View) {
+        deleteAllRecentSearchWordFromDB()
+        requestRecentWordList()
+    }
+
     inner class StartSerachListener : TextView.OnEditorActionListener {
         override fun onEditorAction(v: TextView?, actionId: Int, event: KeyEvent?): Boolean {
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
@@ -125,22 +181,6 @@ class RankingViewModel(
             }
             return false
         }
-    }
-
-    fun deleteAllSearchWord(view: View) {
-        deleteAllRecentSearchWordFromDB()
-        requestRecentWordList()
-    }
-
-    fun hideSoftKeyboard() {
-        val imm = activity.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
-        //Find the currently focused view, so we can grab the correct window token from it.
-        var view = activity.getCurrentFocus()
-        //If no view currently has focus, create a new one, just so we can grab a window token from it
-        if (view == null) {
-            view = View(activity)
-        }
-        imm.hideSoftInputFromWindow(view!!.getWindowToken(), 0)
     }
 
 

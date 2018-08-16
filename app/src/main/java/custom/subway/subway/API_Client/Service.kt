@@ -1,7 +1,7 @@
 package custom.subway.subway.API_Client
 
 
-import custom.subway.subway.Login.LoginViewModel
+import custom.subway.subway.Model.FilterList
 import custom.subway.subway.Model.SubwayList
 import custom.subway.subway.Model.User
 import io.reactivex.Observable
@@ -9,15 +9,19 @@ import okhttp3.ResponseBody
 import retrofit2.http.*
 
 
-
 interface Service {
 
-//    @FormUrlEncoded
+    @FormUrlEncoded
+    @POST("/user/facebook-login/")
+    fun registService(@Field("access_token") access_token: String): Observable<User>
+//
 //    @POST("/user/facebook-login/")
-//    fun registService(@Field("access_token") access_token: String): Observable<User>
+//    fun registService(@Body access_token: LoginViewModel.test): Observable<User>
+
 
     @POST("/user/facebook-login/")
-    fun registService(@Body access_token: LoginViewModel.test): Observable<User>
+    fun registService()
+            : Observable<User>
 
 
     @FormUrlEncoded
@@ -34,5 +38,16 @@ interface Service {
 
     @POST("/recipe/{sandwichId}/like/")
     fun likeThisSandwich(@Path("sandwichId") sandwichId: String): Observable<ResponseBody>
+
+
+    @GET("/recipe/")
+    fun requestRankingBasedOnFilter(
+            @Query("ordering") ordering: String,
+            @Query("sandwich") sandwichId: String
+    ): Observable<SubwayList>
+
+
+    @GET("/recipe/sandwich/")
+    fun requestFilterList(): Observable<FilterList>
 
 }

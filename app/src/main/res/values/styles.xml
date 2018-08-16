@@ -9,14 +9,4 @@
     </style>
 
 
-    <style name="FacebookLoginButton">
-        <item name="android:src">@drawable/btn_facebook</item>
-        <item name="android:layout_marginBottom">10dp</item>
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">100dp</item>
-
-        <item name="android:layout_gravity">center_horizontal</item>
-    </style>
-
-
 </resources>

@@ -2,6 +2,7 @@ package custom.subway.subway.Login
 
 import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.databinding.BaseObservable
 import android.util.Log
 import android.view.View
@@ -13,6 +14,7 @@ import com.facebook.FacebookSdk.getApplicationContext
 import com.facebook.appevents.AppEventsLogger
 import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
+import com.google.gson.JsonObject
 import custom.subway.subway.API_Client.APIClient
 import custom.subway.subway.Model.User
 import custom.subway.subway.R
@@ -85,10 +87,6 @@ class LoginViewModel(val activity: Activity, val context: Context, val subwayApp
                 })
     }
 
-    class test(val access_token: String) {
-
-    }
-
 
     private fun registerSubwayService(
             loginResult: LoginResult? = null
@@ -96,10 +94,11 @@ class LoginViewModel(val activity: Activity, val context: Context, val subwayApp
 
 
         loginResult!!.accessToken?.token?.let {
-            Log.d("testt", "FACEBOOK TOKEN : " + it)
-//            val jsonObject = JsonObject()
-//            jsonObject.addProperty("access_token", it)
-//            val requestBody = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), jsonObject.toString())
+
+
+            val jsonObject = JsonObject()
+            jsonObject.addProperty("access_token", it)
+            val requestBody = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), jsonObject.toString())
 //
 
 //            val somevalue = "somevalue"
@@ -108,7 +107,7 @@ class LoginViewModel(val activity: Activity, val context: Context, val subwayApp
 
             APIClient(application = subwayApplication)
                     .getAPIService()
-                    .registService(test(it.toString()))
+                    .registService(it)
                     .subscribeOn(Schedulers.single())
                     .distinct()
                     .observeOn(AndroidSchedulers.mainThread())
@@ -134,7 +133,7 @@ class LoginViewModel(val activity: Activity, val context: Context, val subwayApp
     }
 
     private fun moveToRankingActvity() {
-        context.startActivity(context.intentFor<RankingActivity>())
+        context.startActivity(context.intentFor<RankingActivity>().addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION))
     }
 
 

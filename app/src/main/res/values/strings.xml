@@ -8,5 +8,4 @@
     <string name="kakao_app_key">843edbbf2a458a072e9670fb028eb8f5</string>
 
     <!--ERROR-->
-    <string name="fail_kakao_login">사용자 정보를 찾지 못하였습니다.</string>
 </resources>

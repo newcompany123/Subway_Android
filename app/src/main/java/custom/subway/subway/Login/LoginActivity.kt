@@ -38,4 +38,5 @@ class LoginActivity : BaseActivity(), LoginContract {
     override fun facebookLoginIsFailed() {
         Log.e("testt", "facebookLoginIsFailed")
     }
+
 }

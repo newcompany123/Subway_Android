@@ -31,9 +31,7 @@
         <activity
             android:name="com.facebook.FacebookActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
-            android:label="@string/app_name" >
-        </activity>
-
+            android:label="@string/app_name"></activity>
         <activity
             android:name="com.facebook.CustomTabActivity"
             android:exported="true">
@@ -46,14 +44,11 @@
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".Ranking.RankingActivity"
-            android:windowSoftInputMode="adjustResize">
-        </activity>
-
-        <activity android:name=".Login.LoginActivity"></activity>
-
+            android:windowSoftInputMode="adjustResize"></activity>
+        <activity android:name=".Login.LoginActivity" />
+        <activity android:name=".MakeRecipe.MakeRecipeActivity"></activity>
     </application>
 
 </manifest>

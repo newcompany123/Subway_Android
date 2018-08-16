@@ -2,6 +2,7 @@ package custom.subway.subway.Utility
 
 import android.databinding.BindingAdapter
 import android.graphics.Typeface
+import android.util.Log
 import android.util.TypedValue
 import android.view.Gravity
 import android.view.View
@@ -12,6 +13,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
+import custom.subway.subway.Model.FilterItem
 import custom.subway.subway.Model.Sandwich
 import kotlin.math.roundToInt
 
@@ -44,6 +46,16 @@ fun imageFromUrl(view: ImageView, sandwich: Sandwich, index: Int) {
         }
     }
 }
+
+@BindingAdapter("filterItem")
+fun imageFromUrl(view: ImageView, filterItem: FilterItem) {
+    Log.d("filter", "")
+    Glide.with(view.context)
+            .load(filterItem.image)
+            .transition(DrawableTransitionOptions.withCrossFade())
+            .into(view)
+}
+
 
 @BindingAdapter("marginBaseOnPosition")
 fun marginBaseOnPosition(view: View, position: Int) {
@@ -83,21 +95,6 @@ fun onFocusChange(text: EditText, listener: View.OnFocusChangeListener) {
 fun onEditTextActionListener(text: EditText, listener: TextView.OnEditorActionListener) {
     text.setOnEditorActionListener(listener)
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

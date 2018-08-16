@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="menuViewModel"
+            type="custom.subway.subway.Menu.MenuViewModel" />
+    </data>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="62dp"
+        android:background="#ffffff"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:onClick="@{menuViewModel.rankingOnClick}"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="2dp"
+                android:layout_marginBottom="4dp"
+                android:src="@drawable/selectedbargreencopy2_2x"
+                android:visibility="@{menuViewModel.rankingActivityIsOn ? View.VISIBLE : View.INVISIBLE}" />
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@{menuViewModel.rankingActivityIsOn ? @drawable/iconrankingcolour_2x : @drawable/award_2x}" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="순위"
+                android:textColor="#9b9b9b"
+                android:textSize="8dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:onClick="@{menuViewModel.makeRecipeOnClick}"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="2dp"
+                android:layout_marginBottom="4dp"
+                android:src="@drawable/selectedbargreencopy2_2x"
+                android:visibility="@{menuViewModel.makeRecipeActivityIsOn ? View.VISIBLE : View.INVISIBLE}" />
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@{menuViewModel.makeRecipeActivityIsOn ? @drawable/iconrecipecolour_2x : @drawable/edit_2x}" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="레시피 만들기"
+                android:textColor="#9b9b9b"
+                android:textSize="8dp" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:onClick="@{menuViewModel.savedReceipeOnClick}"
+            android:orientation="vertical">
+
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="2dp"
+                android:layout_marginBottom="4dp"
+                android:src="@drawable/selectedbargreencopy2_2x"
+                android:visibility="@{menuViewModel.savedARecipeActivityIsOn ? View.VISIBLE : View.INVISIBLE}" />
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@{menuViewModel.savedARecipeActivityIsOn ? @drawable/iconlibrarycolour_2x : @drawable/book_2x}" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="저장된 레시피"
+                android:textColor="#9b9b9b"
+                android:textSize="8dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:onClick="@{menuViewModel.menuOnClick}"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="2dp"
+                android:layout_marginBottom="4dp"
+                android:src="@drawable/selectedbargreencopy2_2x"
+                android:visibility="@{menuViewModel.menuAcitivtyIsOn ? View.VISIBLE : View.INVISIBLE}" />
+
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@{menuViewModel.menuAcitivtyIsOn? @drawable/iconmenucolour_2x : @drawable/menu_2x}" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="메뉴"
+                android:textColor="#9b9b9b"
+                android:textSize="8dp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</layout>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="filterItemViewModel"
+            type="custom.subway.subway.Ranking.FilterItemViewModel" />
+
+    </data>
+
+
+    <LinearLayout
+        android:layout_width="104dp"
+        android:layout_height="106dp"
+        android:layout_gravity="center"
+        android:layout_marginBottom="4dp"
+        android:background="@{filterItemViewModel.filterItemIsChecked ? @drawable/filter_item_background_2 : null}"
+        android:gravity="center"
+        android:onClick="@{filterItemViewModel.filterItemOnClick}"
+        android:orientation="vertical">
+
+        <ImageView
+            filterItem="@{filterItemViewModel.filterItem}"
+            android:layout_width="84dp"
+            android:layout_height="60dp" />
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:maxLines="2"
+            android:text="@{filterItemViewModel.filterItem.name}"
+            android:textSize="12dp" />
+
+    </LinearLayout>
+
+
+</layout>
