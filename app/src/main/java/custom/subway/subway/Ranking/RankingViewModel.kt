@@ -43,7 +43,6 @@ class RankingViewModel(
         startSerachListener = StartSerachListener()
     }
 
-
     fun sortingOrderOnClick(sortingOrder : View){
         Constants.selectedSortingOrder.set((sortingOrder as TextView).text.toString())
     }
@@ -55,8 +54,8 @@ class RankingViewModel(
     fun requestFilterList() {
         APIClient(application = SubwayApplication.getSubwayApplicationContext()!!)
                 .getAPIService()
-                .requestFilterList()
-                .subscribeOn(Schedulers.newThread())
+                .requestSubwayList()
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy(
                         onNext = {

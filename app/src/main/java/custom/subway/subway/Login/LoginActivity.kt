@@ -20,7 +20,8 @@ class LoginActivity : BaseActivity(), LoginContract {
 
     private fun initDataBinding() {
         loginViewModel = LoginViewModel(this@LoginActivity, this, subwayApplication)
-        val binding: LoginActivityBinding = DataBindingUtil.setContentView(this, R.layout.login_activity)
+        val binding: LoginActivityBinding =
+            DataBindingUtil.setContentView(this, R.layout.login_activity)
         binding.loginViewModel = loginViewModel
     }
 

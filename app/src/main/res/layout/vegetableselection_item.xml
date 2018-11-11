@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:bind="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="vegetableSelectionItemViewModel"
+            type="custom.subway.subway.MakeRecipe.VegetableSelection.VegetableSelectionItemViewModel" />
+
+        <variable
+            name="subwayOnprocess"
+            type="custom.subway.subway.MakeRecipe.SubwayOnProcess" />
+
+
+    </data>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="85dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="2dp"
+        android:background="@drawable/vegetableseclection_border"
+        android:orientation="horizontal">
+
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+
+            <ImageView
+                ingredientImage="@{vegetableSelectionItemViewModel.vegetable}"
+                android:layout_width="80dp"
+                android:layout_height="55dp"
+                android:layout_marginBottom="5dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:maxLines="1"
+                android:text="@{vegetableSelectionItemViewModel.vegetable.name}"
+                android:textColor="#717171"
+                android:textSize="12dp" />
+
+        </LinearLayout>
+
+        <!--android:onClick="@{vegetableSelectionItemViewModel.vegetableSelcetionWithAmoutOnClick(0)}"-->
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:onClick="@{(v)->vegetableSelectionItemViewModel.vegetableSelcetionWithAmoutOnClick(v,0)}"
+                android:text="빼"
+                android:textColor="#717171"
+                android:textSize="14dp"
+                bind:isVegetableAmoutIsSelceted_amount="@{0}"
+                bind:isVegetableAmoutIsSelceted_vegetable="@{vegetableSelectionItemViewModel.vegetable}" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:onClick="@{(v)->vegetableSelectionItemViewModel.vegetableSelcetionWithAmoutOnClick(v,1)}"
+                android:text="적게"
+                android:textColor="#717171"
+                android:textSize="14dp"
+                bind:isVegetableAmoutIsSelceted_amount="@{1}"
+                bind:isVegetableAmoutIsSelceted_vegetable="@{vegetableSelectionItemViewModel.vegetable}" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:onClick="@{(v)->vegetableSelectionItemViewModel.vegetableSelcetionWithAmoutOnClick(v,2)}"
+                android:text="기본"
+                android:textColor="#717171"
+                android:textSize="14dp"
+                bind:isVegetableAmoutIsSelceted_amount="@{2}"
+                bind:isVegetableAmoutIsSelceted_vegetable="@{vegetableSelectionItemViewModel.vegetable}" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:onClick="@{(v)->vegetableSelectionItemViewModel.vegetableSelcetionWithAmoutOnClick(v,3)}"
+                android:text="많이"
+                android:textColor="#717171"
+                android:textSize="14dp"
+                bind:isVegetableAmoutIsSelceted_amount="@{3}"
+                bind:isVegetableAmoutIsSelceted_vegetable="@{vegetableSelectionItemViewModel.vegetable}" />
+
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</layout>
+

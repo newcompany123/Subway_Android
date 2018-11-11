@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:bind="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="toppingSelectionItemViewModel"
+            type="custom.subway.subway.MakeRecipe.ToppingSelection.ToppingSelectionItemViewModel" />
+
+        <variable
+            name="subwayOnprocess"
+            type="custom.subway.subway.MakeRecipe.SubwayOnProcess" />
+
+
+    </data>
+
+
+    <LinearLayout
+        android:layout_width="104dp"
+        android:layout_height="106dp"
+        android:layout_marginBottom="12dp"
+        android:gravity="center"
+        android:onClick="@{toppingSelectionItemViewModel.selectToppingOnClick}"
+        android:orientation="vertical"
+        android:background="@{subwayOnprocess.toppings.contains(toppingSelectionItemViewModel.topping.name) ? @drawable/filter_item_background_2 : null}"
+        >
+
+
+        <ImageView
+            ingredientImage="@{toppingSelectionItemViewModel.topping}"
+            android:layout_width="80dp"
+            android:layout_height="55dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{toppingSelectionItemViewModel.topping.name}"
+            android:textColor="#4a4a4a"
+            android:textSize="14dp" />
+
+
+    </LinearLayout>
+
+</layout>
+

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="vegetableSelectionViewModel"
+            type="custom.subway.subway.MakeRecipe.VegetableSelection.VegetableSelectionViewModel" />
+
+
+    </data>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical">
+
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/vegetableSelectionRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="21dp"
+            android:layout_weight="1" />
+
+
+        <TextView
+            android:layout_width="286dp"
+            android:layout_height="46dp"
+            android:layout_marginBottom="16dp"
+            android:layout_marginTop="9dp"
+            android:background="@drawable/btn_apply_filter"
+            android:gravity="center"
+            android:onClick="@{vegetableSelectionViewModel.vegetableSelectionIsFinishedOnclick}"
+            android:text="다음 단계로"
+            android:textColor="#ffffff"
+            android:textSize="16dp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+
+</layout>
+
+

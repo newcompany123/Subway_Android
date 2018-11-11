@@ -31,7 +31,7 @@ class RankingListAdapter(
     }
 
     override fun onBindViewHolder(holder: RankingListAdapterViewHolder, position: Int) {
-        subwayList.results.get(position).let { subway ->
+        subwayList.results.get(position)?.let { subway ->
             with(holder) {
                 itemView.tag = subway
                 bind(subway, position)

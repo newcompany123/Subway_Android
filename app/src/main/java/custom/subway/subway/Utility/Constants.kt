@@ -18,6 +18,8 @@ object Constants {
     var observableSubwayFilter: ObservableSubwayFilter
     var selectedSortingOrder: ObservableField<String> = ObservableField()
     var seletedCategoryFilter: ObservableField<String> = ObservableField()
+    var selectedSubwaySelection: ObservableField<String> = ObservableField()
+
 
 
     init {
@@ -38,6 +40,7 @@ object Constants {
             add("아침메뉴")
         }
         seletedCategoryFilter.set(categoryList.get(0))
+        selectedSubwaySelection.set(categoryList.get(0))
         observableSubwayFilter = ObservableSubwayFilter()
     }
 

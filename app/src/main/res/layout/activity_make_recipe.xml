@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/tools">
 
     <data>
 
@@ -8,6 +10,18 @@
         <variable
             name="makeViewModel"
             type="custom.subway.subway.MakeRecipe.MakeRecipeViewModel" />
+
+        <variable
+            name="MakeRecipeActivity"
+            type="custom.subway.subway.MakeRecipe.MakeRecipeActivity" />
+
+        <variable
+            name="fragmentManager"
+            type="android.support.v4.app.FragmentManager" />
+
+        <variable
+            name="subwayOnProcess"
+            type="custom.subway.subway.MakeRecipe.SubwayOnProcess" />
 
     </data>
 
@@ -45,26 +59,32 @@
                     <ImageView
                         android:layout_width="56dp"
                         android:layout_height="56dp"
+                        android:onClick="@{(view)->makeViewModel.refreshMakeRecipe(view, pager)}"
                         android:padding="16dp"
                         android:src="@drawable/refresh_ccw" />
 
                 </LinearLayout>
 
-                <HorizontalScrollView
+                <android.support.design.widget.TabLayout
+                    android:id="@+id/tab"
                     android:layout_width="match_parent"
                     android:layout_height="56dp"
-                    android:scrollbars="none"
-                    android:fillViewport="true">
+                    app:tabGravity="center"
+                    app:tabMode="scrollable"
+                    app:tabSelectedTextColor="#4a4a4a"
+                    app:tabTextColor="#dddddd"
+                    bind:followCurrentPage="@{subwayOnProcess.CURRENT_PAGE}"
+                    bind:pager="@{pager}" />
 
-
-
-                </HorizontalScrollView>
+                <custom.subway.subway.MakeRecipe.SwipedDisabledPager
+                    android:id="@+id/pager"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    bind:handler="@{MakeRecipeActivity}" />
 
             </LinearLayout>
 
-
         </FrameLayout>
-
 
         <include
             android:id="@+id/bottomMenu"
@@ -73,4 +93,5 @@
             android:layout_height="wrap_content" />
 
     </LinearLayout>
+
 </layout>

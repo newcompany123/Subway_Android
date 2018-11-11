@@ -36,10 +36,10 @@ class APIClient(val application: SubwayApplication) {
         val headerInterceptorForLoginUser = Interceptor { chain ->
             val original = chain.request()
             val builder = original.newBuilder()
-            if (application.isLogin) {
+//            if (application.isLogin) {
 //                builder.header("Authorization", "Token " + User.getInstance().token)
-                builder.header("Authorization", "token " + "JMeVwBMPAySzluUZplW5mQMmN65wDTvnVbnpibrz")
-            }
+//                builder.header("Authorization", "token " + "0c0b8a3b0cac2772abfc4912878a5fa81ed26475")
+//            }
             builder.method(original.method(), original.body())
             val request = builder.build()
             chain.proceed(request)

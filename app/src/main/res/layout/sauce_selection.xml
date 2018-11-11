@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="sauceSelectionViewModel"
+            type="custom.subway.subway.MakeRecipe.SauceSelection.SauceSelectionViewModel" />
+
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+         <android.support.v7.widget.RecyclerView
+            android:id="@+id/sauceSelectionRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="21dp" />
+
+        <TextView
+            android:layout_width="286dp"
+            android:layout_height="46dp"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/btn_apply_filter"
+            android:gravity="center"
+            android:onClick="@{sauceSelectionViewModel.sauceSelectionIsFinishedOnclick}"
+            android:text="다음 단계로"
+            android:textColor="#ffffff"
+            android:textSize="16dp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+</layout>
+

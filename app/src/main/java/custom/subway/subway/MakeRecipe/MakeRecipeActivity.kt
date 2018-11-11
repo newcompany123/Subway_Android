@@ -2,13 +2,12 @@ package custom.subway.subway.MakeRecipe
 
 import android.databinding.DataBindingUtil
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import custom.subway.subway.Menu.MenuViewModel
-import custom.subway.subway.Model.SubwayList
 import custom.subway.subway.R
+import custom.subway.subway.Utility.BaseActivity
 import custom.subway.subway.databinding.ActivityMakeRecipeBinding
 
-class MakeRecipeActivity : AppCompatActivity(),MakeRecipeContract{
+class MakeRecipeActivity : BaseActivity() {
 
     lateinit var makeRecipeViewModel: MakeRecipeViewModel
 
@@ -19,13 +18,16 @@ class MakeRecipeActivity : AppCompatActivity(),MakeRecipeContract{
 
 
     fun initDataBinding() {
-        makeRecipeViewModel = MakeRecipeViewModel()
+        makeRecipeViewModel = MakeRecipeViewModel(this@MakeRecipeActivity)
         val binding: ActivityMakeRecipeBinding = DataBindingUtil.setContentView(this, R.layout.activity_make_recipe)
-        binding.makeViewModel = makeRecipeViewModel
-        binding.bottomMenu!!.menuViewModel = MenuViewModel.getInstance(application)
+
+        with(binding) {
+            makeViewModel = makeRecipeViewModel
+            bottomMenu!!.menuViewModel = MenuViewModel.getInstance(application)
+            fragmentManager = supportFragmentManager
+            makeRecipeActivity = this@MakeRecipeActivity
+            subwayOnProcess = SubwayOnProcess
+        }
     }
 
-    override fun showSubwayList(subwayList: SubwayList) {
-
-    }
 }

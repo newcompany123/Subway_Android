@@ -1,0 +1,23 @@
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="cheeseSelectionViewModel"
+            type="custom.subway.subway.MakeRecipe.CheeseSelection.CheeseSelectionViewModel" />
+
+
+    </data>
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_marginTop="21dp"
+
+        android:id="@+id/cheeseSelectionRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</layout>

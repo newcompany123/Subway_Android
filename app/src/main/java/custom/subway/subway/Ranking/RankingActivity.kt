@@ -34,7 +34,7 @@ class RankingActivity : BaseActivity(), RankingContract {
 
 
     fun initDataBinding() {
-        rankingViewModel = RankingViewModel(this, this@RankingActivity)
+        rankingViewModel = custom.subway.subway.Ranking.RankingViewModel(this, this@RankingActivity)
         val binding: ActivityRankingBinding =
                 DataBindingUtil.setContentView(this, R.layout.activity_ranking)
         binding.let {
@@ -51,9 +51,9 @@ class RankingActivity : BaseActivity(), RankingContract {
         filterRecyclerView.apply {
             layoutManager = GridLayoutManager(this@RankingActivity, 3)
             isNestedScrollingEnabled = false
-            adapter = FilterAdapter(
-                    context = this@RankingActivity,
-                    filterList = filterList
+            adapter = custom.subway.subway.Ranking.FilterAdapter(
+                context = this@RankingActivity,
+                filterList = filterList
             )
             val itemCount = (adapter.itemCount) / 3
             layoutParams.height = itemCount * dpToPx(110)
@@ -63,9 +63,9 @@ class RankingActivity : BaseActivity(), RankingContract {
     override fun showRanking(subwayList: SubwayList) {
         val rankingListRecyclerView = findViewById<RecyclerView>(R.id.rankingList)
         rankingListRecyclerView.layoutManager = LinearLayoutManager(this)
-        rankingListAdapter = RankingListAdapter(
-                context = this,
-                subwayList = subwayList
+        rankingListAdapter = custom.subway.subway.Ranking.RankingListAdapter(
+            context = this,
+            subwayList = subwayList
         )
         rankingListRecyclerView.adapter = rankingListAdapter
     }
@@ -73,10 +73,10 @@ class RankingActivity : BaseActivity(), RankingContract {
     override fun showRecentSerachList(searchWordList: ArrayList<String>?) {
         val serachBoxRecyclerView = findViewById<RecyclerView>(R.id.serachWordList)
         serachBoxRecyclerView.layoutManager = LinearLayoutManager(this)
-        serachwordListAdapter = SearchWordListAdapter(
-                rankingContract = this,
-                context = this,
-                searchWordList = searchWordList!!.reversed()
+        serachwordListAdapter = custom.subway.subway.Ranking.SearchWordListAdapter(
+            rankingContract = this,
+            context = this,
+            searchWordList = searchWordList!!.reversed()
         )
         serachBoxRecyclerView.adapter = serachwordListAdapter
     }
