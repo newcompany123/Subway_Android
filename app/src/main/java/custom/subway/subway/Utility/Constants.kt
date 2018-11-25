@@ -6,7 +6,7 @@ import android.databinding.ObservableField
 object Constants {
 
     //Retrofit
-    const val BASE_URL = "http://subway-eb.ap-northeast-2.elasticbeanstalk.com/"
+    const val BASE_URL = "https://api.my-subway.com"
 
     // User
     const val USER_TOKEN_PREF = "user_token"

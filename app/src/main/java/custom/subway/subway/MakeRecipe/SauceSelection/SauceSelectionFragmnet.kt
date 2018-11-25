@@ -8,6 +8,7 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import custom.subway.subway.Dialog.MakeRecipeConfrimDialog
 import custom.subway.subway.MakeRecipe.MakeRecipeActivity
 import custom.subway.subway.Model.IngredientResult
 import custom.subway.subway.R
@@ -31,6 +32,20 @@ class SauceSelectionFragmnet : Fragment(), SauceSelectionContract {
         binding.sauceSelectionViewModel = SauceSelectionViewModel(
                 sauceSelectionContract = this
         )
+    }
+
+
+    override fun showMakeReceipeConfirmDialog() {
+        val makeRecipeConfrimDialog = MakeRecipeConfrimDialog()
+        makeRecipeConfrimDialog.show(activity!!.fragmentManager,"")
+        makeRecipeConfrimDialog.addConfirOrNotListner(object : MakeRecipeConfrimDialog.ConfirmOrNotNotifier{
+            override fun confirm() {
+                binding.sauceSelectionViewModel!!.letsGoToMakeName()
+            }
+
+            override fun notConfirmed() {
+            }
+        })
     }
 
     override fun showSauceList(sauceList: IngredientResult) {

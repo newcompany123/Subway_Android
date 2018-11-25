@@ -10,7 +10,7 @@ import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
 
 class SauceSelectionViewModel(
-        val sauceSelectionContract: SauceSelectionContract
+    val sauceSelectionContract: SauceSelectionContract
 ) {
     var sauceList: IngredientResult? = null
 
@@ -20,23 +20,29 @@ class SauceSelectionViewModel(
 
     fun getSauceList() {
         APIClient(application = SubwayApplication.getSubwayApplicationContext()!!)
-                .getAPIService()
-                .reqeustSauceList()
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeBy(
-                        onNext = {
-                            sauceList = it
-                            sauceList?.let {
-                                sauceSelectionContract.showSauceList(it)
-                            }
-                        },
-                        onError = {
-                        }
-                )
+            .getAPIService()
+            .reqeustSauceList()
+            .subscribeOn(Schedulers.newThread())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeBy(
+                onNext = {
+                    sauceList = it
+                    sauceList?.let {
+                        sauceSelectionContract.showSauceList(it)
+                    }
+                },
+                onError = {
+                }
+            )
     }
 
     fun sauceSelectionIsFinishedOnclick(view: View) {
+//        sauceSelectionContract.showMakeReceipeConfirmDialog()
+        SubwayOnProcess.setCurrentProccess(7)
+
+    }
+
+    fun letsGoToMakeName(){
         SubwayOnProcess.setCurrentProccess(7)
     }
 }

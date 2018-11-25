@@ -12,7 +12,7 @@ data class SubwayList(
 
 data class Subway(
         val id: Int,
-        val name: Name,
+        val name: String,
         val sandwich: Sandwich,
         val cheese: Cheese,
         val bread: Bread,
@@ -28,7 +28,6 @@ data class Subway(
         var like_bookmark_count: Int,
         var image : String
 ) : Serializable
-
 
 data class Name(
         val id: Int,

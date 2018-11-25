@@ -5,7 +5,6 @@ import android.graphics.Color
 import android.graphics.Typeface
 import android.support.design.widget.TabLayout
 import android.support.v4.view.ViewPager
-import android.support.v7.widget.LinearLayoutCompat
 import android.util.Log
 import android.util.TypedValue
 import android.view.Gravity
@@ -143,15 +142,15 @@ fun bindPagerTab(tabView: TabLayout, pager: ViewPager) {
 //    }
 
 
-    val tabStrip = tabView.getChildAt(0) as LinearLayoutCompat
-    Log.d("ttt", "1 : "+     tabView.getChildAt(0).layoutParams
-    )
-    Log.d("ttt", "1 : "+ tabView.childCount)
-
-    tabStrip.isEnabled = false
-    for (i in 0 until tabStrip.childCount) {
-        tabStrip.getChildAt(i).isClickable = false
-    }
+//    val tabStrip = tabView.getChildAt(0) as LinearLayoutCompat
+//    Log.d("ttt", "1 : "+     tabView.getChildAt(0).layoutParams
+//    )
+//    Log.d("ttt", "1 : "+ tabView.childCount)
+//
+//    tabStrip.isEnabled = false
+//    for (i in 0 until tabStrip.childCount) {
+//        tabStrip.getChildAt(i).isClickable = false
+//    }
 
 }
 

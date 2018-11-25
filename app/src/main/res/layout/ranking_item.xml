@@ -74,7 +74,7 @@
                     android:ellipsize="end"
                     android:gravity="top|center_horizontal"
                     android:maxLines="3"
-                    android:text="@{rankingItemViewModel.subway.name.name}"
+                    android:text="@{rankingItemViewModel.subway.name}"
                     android:textColor="#4a4a4a"
                     android:textSize="26dp"
                     android:textStyle="bold" />
